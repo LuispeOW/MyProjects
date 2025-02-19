@@ -12,9 +12,6 @@ body {
     width: 800px;
     height: 400px;
     margin: 50px auto;
-    perspective: 2000px;
-    transform-style: preserve-3d;
-    transition: transform 0.8s ease-in-out;
 }
 
 .flash-card {
@@ -23,9 +20,8 @@ body {
     height: 200px;
     left: calc(50% - 150px);
     top: calc(50% - 100px);
-    transform-origin: 50% 50% -300px;
     cursor: pointer;
-    transition: all 0.8s ease-in-out;
+    transition: all 0.5s ease-in-out;
     background: white;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
@@ -33,12 +29,6 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    backface-visibility: visible;
-    transform-style: preserve-3d;
-}
-
-.flash-card:hover {
-    transform: scale(1.05) translateZ(20px);
 }
 
 .flash-card.active {
