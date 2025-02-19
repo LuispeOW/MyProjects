@@ -12,13 +12,13 @@ const cardUrls = {
     'card-contact': '/contact.html'
 };
 
-// Define positions for each card state
+// Adjusted positions to ensure all cards are visible
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -350, y: 300, rotate: -15, scale: 0.8 },
-    right: { x: 350, y: 300, rotate: 15, scale: 0.8 },
-    farLeft: { x: -600, y: 400, rotate: -20, scale: 0.7 },
-    farRight: { x: 600, y: 400, rotate: 20, scale: 0.7 }
+    left: { x: -500, y: 200, rotate: -15, scale: 0.85 },    // Adjusted left position
+    right: { x: 500, y: 200, rotate: 15, scale: 0.85 },     // Adjusted right position
+    farLeft: { x: -800, y: 300, rotate: -25, scale: 0.7 },  // Adjusted far left
+    farRight: { x: 800, y: 300, rotate: 25, scale: 0.7 }    // Adjusted far right
 };
 
 function updateCardsPosition() {
@@ -27,31 +27,39 @@ function updateCardsPosition() {
         const offset = (index - activeIndex + totalCards) % totalCards;
         
         switch(offset) {
-            case 0:
+            case 0: // Active card (center)
                 position = positions.center;
+                card.style.opacity = 1;
                 break;
-            case 1:
+            case 1: // Next card (right)
                 position = positions.right;
+                card.style.opacity = 0.8;
                 break;
-            case totalCards - 1:
+            case totalCards - 1: // Previous card (left)
                 position = positions.left;
+                card.style.opacity = 0.8;
                 break;
-            case 2:
+            case 2: // Far next card (far right)
                 position = positions.farRight;
+                card.style.opacity = 0.6;
                 break;
-            default:
+            default: // Far previous card (far left)
                 position = positions.farLeft;
+                card.style.opacity = 0.6;
                 break;
         }
 
+        // Apply transforms with easing
         card.style.transform = `
             translate(${position.x}px, ${position.y}px)
             rotate(${position.rotate}deg)
             scale(${position.scale})
         `;
         
-        card.style.zIndex = offset === 0 ? 5 : 4;
+        // Update z-index
+        card.style.zIndex = offset === 0 ? 5 : 4 - Math.abs(offset);
         
+        // Update cursor and active state
         if (offset === 0) {
             card.style.cursor = 'pointer';
             card.classList.add('active');
@@ -82,7 +90,6 @@ document.addEventListener('keydown', (e) => {
             moveNext();
             break;
         case 'Enter':
-            // Navigate when Enter is pressed on active card
             const activeCard = document.querySelector('.flash-card.active');
             if (activeCard) {
                 const cardClass = Array.from(activeCard.classList).find(cls => cls.startsWith('card-'));
@@ -99,13 +106,11 @@ cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Navigate to corresponding page when active card is clicked
             const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
             if (cardClass && cardUrls[cardClass]) {
                 window.location.href = cardUrls[cardClass];
             }
         } else {
-            // Rotate carousel for non-active cards
             if (diff <= totalCards / 2) {
                 moveNext();
             } else {
@@ -117,3 +122,6 @@ cards.forEach((card, index) => {
 
 // Initial setup
 updateCardsPosition();
+
+// Handle window resize
+window.addEventListener('resize', updateCardsPosition);
