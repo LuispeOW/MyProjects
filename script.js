@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const flashCards = document.querySelectorAll(".flash-card");
-    const container = document.querySelector(".flash-card-container");
     let currentIndex = 0;
 
     function showCard(index) {
