@@ -15,10 +15,10 @@ const cardUrls = {
 // Define positions for each card state
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -1000, y: 400, rotate: -15, scale: 0.85 },    // Adjusted for larger cards
-    right: { x: 1000, y: 400, rotate: 15, scale: 0.85 },     // Adjusted for larger cards
-    farLeft: { x: -1400, y: 600, rotate: -25, scale: 0.7 },  // Adjusted for larger cards
-    farRight: { x: 1400, y: 600, rotate: 25, scale: 0.7 }    // Adjusted for larger cards
+    left: { x: -850, y: 300, rotate: -15, scale: 0.85 },    // Adjusted for new size
+    right: { x: 850, y: 300, rotate: 15, scale: 0.85 },     // Adjusted for new size
+    farLeft: { x: -1200, y: 500, rotate: -25, scale: 0.7 }, // Adjusted for new size
+    farRight: { x: 1200, y: 500, rotate: 25, scale: 0.7 }   // Adjusted for new size
 };
 
 function updateCardsPosition() {

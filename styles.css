@@ -40,16 +40,16 @@ h1 {
 /* Update card dimensions */
 .flash-card {
     position: absolute;
-    width: 900px;     /* Significantly increased from 600px */
-    height: 500px;    /* Significantly increased from 350px */
+    width: 700px;     /* Adjusted to requested width */
+    height: 400px;    /* Maintained similar aspect ratio */
     cursor: pointer;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 30px;  /* Increased border radius */
+    border-radius: 25px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 72px;  /* Increased font size */
+    font-size: 64px;  /* Adjusted for new size */
     text-align: center;
     color: white;
     font-weight: bold;
