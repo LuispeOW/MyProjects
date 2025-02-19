@@ -13,20 +13,21 @@ html, body {
 
 h1 {
     text-align: center;
-    font-size: 4rem;
-    margin-top: 20px;
+    font-size: 5rem;
+    margin-top: 30px;
+    margin-bottom: 50px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     letter-spacing: 4px;
 }
 
+/* Increase spacing for carousel container */
 .carousel-container {
     position: fixed;
     width: 100%;
-    height: calc(100% - 100px);
+    height: calc(100% - 120px); /* Adjusted for larger cards */
     overflow: hidden;
 }
-
 .carousel {
     position: absolute;
     width: 100%;
@@ -39,21 +40,21 @@ h1 {
 /* Update card dimensions */
 .flash-card {
     position: absolute;
-    width: 650px;    /* Increased from 400px */
-    height: 370px;   /* Increased from 250px */
+    width: 900px;     /* Significantly increased from 600px */
+    height: 500px;    /* Significantly increased from 350px */
     cursor: pointer;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 25px;  /* Slightly larger border radius */
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    border-radius: 30px;  /* Increased border radius */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 48px;  /* Increased font size */
+    font-size: 72px;  /* Increased font size */
     text-align: center;
     color: white;
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 3px;  /* Increased letter spacing */
+    letter-spacing: 4px;
     backdrop-filter: blur(5px);
     will-change: transform, opacity;
 }
