@@ -5,23 +5,24 @@ html, body {
     height: 100vh;
     overflow: hidden;
     position: fixed;
-    background: #000080; /* Navy blue background */
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     color: white;
-    font-family: serif;
+    font-family: 'Times New Roman', serif;
 }
 
 h1 {
     text-align: center;
-    font-size: 3rem;
+    font-size: 4rem;
     margin-top: 20px;
-    color: whitesmoke;
-    font-family: 'Times New Roman', serif;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 4px;
 }
 
 .carousel-container {
     position: fixed;
     width: 100%;
-    height: calc(100% - 100px); /* Account for header */
+    height: calc(100% - 100px);
     overflow: hidden;
 }
 
@@ -36,12 +37,12 @@ h1 {
 
 .flash-card {
     position: absolute;
-    width: 400px;  /* Increased size */
-    height: 250px; /* Increased size */
+    width: 400px;
+    height: 250px;
     cursor: pointer;
     transition: all 0.8s ease-in-out;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,46 +50,56 @@ h1 {
     text-align: center;
     color: white;
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    backdrop-filter: blur(5px);
 }
 
-/* Individual card colors */
+/* Individual card colors with gradients */
 .card-projects {
-    background: #4CAF50; /* Green */
+    background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
 }
 
 .card-blog {
-    background: #FF5722; /* Deep Orange */
+    background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
 }
 
 .card-about {
-    background: #2196F3; /* Blue */
+    background: linear-gradient(135deg, #29b6f6 0%, #0288d1 100%);
 }
 
 .card-contact {
-    background: #9C27B0; /* Purple */
+    background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
+}
+
+.flash-card:hover {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    transform: translateY(-5px);
 }
 
 .controls {
     position: fixed;
-    bottom: 20px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 20px;
+    gap: 30px;
     z-index: 100;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    background: #333;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
     color: white;
-    font-size: 16px;
-    transition: background 0.3s;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
 button:hover {
-    background: #555;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }

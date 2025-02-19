@@ -6,13 +6,21 @@ const nextBtn = document.getElementById('next');
 let activeIndex = 0;
 const totalCards = cards.length;
 
+// Define page URLs for each card
+const cardUrls = {
+    'card-projects': '/projects.html',
+    'card-blog': '/blog.html',
+    'card-about': '/about.html',
+    'card-contact': '/contact.html'
+};
+
 // Define positions for each card state
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -350, y: 300, rotate: -15, scale: 0.8 },    // Adjusted to be visible
-    right: { x: 350, y: 300, rotate: 15, scale: 0.8 },     // Adjusted to be visible
-    farLeft: { x: -600, y: 400, rotate: -20, scale: 0.7 }, // Moved into view
-    farRight: { x: 600, y: 400, rotate: 20, scale: 0.7 }   // Moved into view
+    left: { x: -350, y: 300, rotate: -15, scale: 0.8 },
+    right: { x: 350, y: 300, rotate: 15, scale: 0.8 },
+    farLeft: { x: -600, y: 400, rotate: -20, scale: 0.7 },
+    farRight: { x: 600, y: 400, rotate: 20, scale: 0.7 }
 };
 
 function updateCardsPosition() {
@@ -21,42 +29,42 @@ function updateCardsPosition() {
         const offset = (index - activeIndex + totalCards) % totalCards;
         
         switch(offset) {
-            case 0: // Active card
+            case 0:
                 position = positions.center;
                 break;
-            case 1: // Next card
+            case 1:
                 position = positions.right;
                 break;
-            case totalCards - 1: // Previous card
+            case totalCards - 1:
                 position = positions.left;
                 break;
-            case 2: // Far next card
+            case 2:
                 position = positions.farRight;
                 break;
-            default: // Far previous card
+            default:
                 position = positions.farLeft;
                 break;
         }
 
-        // Apply transforms
         card.style.transform = `
             translate(${position.x}px, ${position.y}px)
             rotate(${position.rotate}deg)
             scale(${position.scale})
         `;
         
-        // Adjust z-index for proper stacking
+        card.style.zIndex = offset === 0 ? 5 : 4;
+        
+        // Make active card clickable for navigation
         if (offset === 0) {
-            card.style.zIndex = 5;
-        } else if (offset === 1 || offset === totalCards - 1) {
-            card.style.zIndex = 4;
+            card.style.cursor = 'pointer';
+            card.classList.add('active');
         } else {
-            card.style.zIndex = 3;
+            card.style.cursor = 'default';
+            card.classList.remove('active');
         }
     });
 }
 
-// Rest of the JavaScript remains the same...
 function moveNext() {
     activeIndex = (activeIndex + 1) % totalCards;
     updateCardsPosition();
@@ -68,13 +76,21 @@ function movePrev() {
 }
 
 // Event listeners
-nextBtn.addEventListener('click', moveNext);
-prevBtn.addEventListener('click', movePrev);
+prevBtn.addEventListener('click', moveNext);
+nextBtn.addEventListener('click', movePrev);
 
+// Add click handlers for cards
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
-        if (diff !== 0) {
+        if (diff === 0) {
+            // Navigate to corresponding page when active card is clicked
+            const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
+            if (cardClass && cardUrls[cardClass]) {
+                window.location.href = cardUrls[cardClass];
+            }
+        } else {
+            // Rotate carousel for non-active cards
             if (diff <= totalCards / 2) {
                 moveNext();
             } else {
