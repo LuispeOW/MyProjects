@@ -39,8 +39,8 @@ h1 {
 /* Update card dimensions */
 .flash-card {
     position: absolute;
-    width: 800px;    /* Increased from 400px */
-    height: 460px;   /* Increased from 250px */
+    width: 700px;    /* Increased from 400px */
+    height: 400px;   /* Increased from 250px */
     cursor: pointer;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 25px;  /* Slightly larger border radius */
