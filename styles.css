@@ -1,82 +1,86 @@
-/* General Page Styles */
 body {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f4f4f4;
+    overflow: hidden;
     margin: 0;
-    font-family: Arial, sans-serif;
 }
 
-/* Carousel Wrapper */
 .carousel {
     display: flex;
-    position: relative;
-    width: 300px;
-    height: 400px;
-    overflow: hidden;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 80vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
-/* Flash Cards */
 .flash-card {
     position: absolute;
-    width: 250px;
-    height: 350px;
+    width: 350px;
+    height: 500px;
     border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
+    transition: transform 0.6s ease, opacity 0.6s ease;
     color: white;
-    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-/* Flash Card Colors */
+/* Assign unique colors */
 .flash-card:nth-child(1) {
     background-color: #4CAF50; /* Green */
+    transform: translateY(-250px) scale(0.7);
+    opacity: 0.5;
+    z-index: 1;
 }
 
 .flash-card:nth-child(2) {
-    background-color: #FFA500; /* Orange */
+    background-color: #FF9800; /* Orange */
+    transform: translateY(-100px) scale(0.85);
+    opacity: 0.7;
+    z-index: 2;
 }
 
 .flash-card:nth-child(3) {
     background-color: #2196F3; /* Blue */
+    transform: translateY(50px) scale(1);
+    opacity: 1;
+    z-index: 3;
 }
 
 .flash-card:nth-child(4) {
     background-color: #9C27B0; /* Purple */
+    transform: translateY(200px) scale(0.85);
+    opacity: 0.7;
+    z-index: 2;
 }
 
-/* Default Positioning */
-.flash-card.hidden {
-    display: none;
-}
-
-/* Navigation Controls */
 .controls {
     position: absolute;
-    bottom: -60px;
-    display: flex;
-    justify-content: space-between;
     width: 100%;
+    bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .controls button {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     cursor: pointer;
     font-size: 1.2em;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .controls button:hover {
