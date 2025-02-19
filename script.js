@@ -6,13 +6,13 @@ const nextBtn = document.getElementById('next');
 let activeIndex = 0;
 const totalCards = cards.length;
 
-// Define the positions for each card state
+// Define positions for each card state
 const positions = {
-    center: { x: 0, y: 0, scale: 1 },
-    left: { x: -300, y: -100, scale: 0.8 },
-    right: { x: 300, y: 100, scale: 0.8 },
-    farLeft: { x: -500, y: -200, scale: 0.6 },
-    farRight: { x: 500, y: 200, scale: 0.6 }
+    center: { x: 0, y: 0, rotate: 0, scale: 1 },
+    left: { x: -200, y: window.innerHeight * 0.4, rotate: -15, scale: 0.9 },
+    right: { x: 200, y: window.innerHeight * 0.4, rotate: 15, scale: 0.9 },
+    farLeft: { x: -400, y: window.innerHeight * 0.6, rotate: -30, scale: 0.8 },
+    farRight: { x: 400, y: window.innerHeight * 0.6, rotate: 30, scale: 0.8 }
 };
 
 function updateCardsPosition() {
@@ -38,8 +38,10 @@ function updateCardsPosition() {
                 break;
         }
 
+        // Apply transforms
         card.style.transform = `
             translate(${position.x}px, ${position.y}px)
+            rotate(${position.rotate}deg)
             scale(${position.scale})
         `;
         card.style.zIndex = offset === 0 ? 5 : 0;
@@ -74,11 +76,8 @@ cards.forEach((card, index) => {
     });
 });
 
-// Handle keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') movePrev();
-    if (e.key === 'ArrowRight') moveNext();
-});
-
 // Initial setup
 updateCardsPosition();
+
+// Handle window resize
+window.addEventListener('resize', updateCardsPosition);
