@@ -3,30 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects</title>
+    <title>My Projects - Sliding Navigation</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
-    <header>
-        <div class="nav-container">
-            <h1>My Projects</h1>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="projects/index.html">Projects</a>
-                <a href="blog/index.html">Blog</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-        </div>
-    </header>
-    
-    <main>
-        <h2>Welcome!</h2>
-        <p>This is my personal project page where I upload things I’ve built and done.</p>
-    </main>
-    <footer>
-        <p>© 2025 Luispe. All rights reserved.</p>
-    </footer>    
+    <div class="slider">
+        <section id="projects" class="slide"> 
+            <h1>Projects</h1>
+            <p>Explore my latest builds and designs.</p>
+        </section>
+        <section id="blog" class="slide"> 
+            <h1>Blog</h1>
+            <p>Read about my experiences and thoughts.</p>
+        </section>
+        <section id="about" class="slide"> 
+            <h1>About Me</h1>
+            <p>Learn more about my journey and skills.</p>
+        </section>
+        <section id="contact" class="slide"> 
+            <h1>Contact</h1>
+            <p>Let's get in touch.</p>
+        </section>
+    </div>
 </body>
 </html>
 
