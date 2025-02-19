@@ -9,10 +9,10 @@ const totalCards = cards.length;
 // Define positions for each card state
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -300, y: window.innerHeight, rotate: -15, scale: 0.9 },
-    right: { x: 300, y: window.innerHeight, rotate: 15, scale: 0.9 },
-    farLeft: { x: -500, y: window.innerHeight * 1.5, rotate: -30, scale: 0.8 },
-    farRight: { x: 500, y: window.innerHeight * 1.5, rotate: 30, scale: 0.8 }
+    left: { x: -250, y: 150, rotate: -15, scale: 0.9 },    // Adjusted to be partially visible
+    right: { x: 250, y: 150, rotate: 15, scale: 0.9 },     // Adjusted to be partially visible
+    farLeft: { x: -400, y: 250, rotate: -20, scale: 0.8 }, // Moved closer to viewport
+    farRight: { x: 400, y: 250, rotate: 20, scale: 0.8 }   // Moved closer to viewport
 };
 
 function updateCardsPosition() {
@@ -45,11 +45,18 @@ function updateCardsPosition() {
             scale(${position.scale})
         `;
         
-        // Ensure proper stacking
-        card.style.zIndex = offset === 0 ? 5 : 0;
+        // Set z-index based on position
+        if (offset === 0) {
+            card.style.zIndex = 5;
+        } else if (offset === 1 || offset === totalCards - 1) {
+            card.style.zIndex = 4;
+        } else {
+            card.style.zIndex = 3;
+        }
     });
 }
 
+// Rest of the code remains the same...
 function moveNext() {
     activeIndex = (activeIndex + 1) % totalCards;
     updateCardsPosition();
@@ -80,13 +87,3 @@ cards.forEach((card, index) => {
 
 // Initial setup
 updateCardsPosition();
-
-// Handle window resize
-window.addEventListener('resize', () => {
-    // Update positions object with new window height
-    positions.left.y = window.innerHeight;
-    positions.right.y = window.innerHeight;
-    positions.farLeft.y = window.innerHeight * 1.5;
-    positions.farRight.y = window.innerHeight * 1.5;
-    updateCardsPosition();
-});
