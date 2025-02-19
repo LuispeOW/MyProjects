@@ -9,10 +9,10 @@ const totalCards = cards.length;
 // Define positions for each card state
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -250, y: 150, rotate: -15, scale: 0.9 },    // Adjusted to be partially visible
-    right: { x: 250, y: 150, rotate: 15, scale: 0.9 },     // Adjusted to be partially visible
-    farLeft: { x: -400, y: 250, rotate: -20, scale: 0.8 }, // Moved closer to viewport
-    farRight: { x: 400, y: 250, rotate: 20, scale: 0.8 }   // Moved closer to viewport
+    left: { x: -350, y: 300, rotate: -15, scale: 0.8 },    // Adjusted to be visible
+    right: { x: 350, y: 300, rotate: 15, scale: 0.8 },     // Adjusted to be visible
+    farLeft: { x: -600, y: 400, rotate: -20, scale: 0.7 }, // Moved into view
+    farRight: { x: 600, y: 400, rotate: 20, scale: 0.7 }   // Moved into view
 };
 
 function updateCardsPosition() {
@@ -45,7 +45,7 @@ function updateCardsPosition() {
             scale(${position.scale})
         `;
         
-        // Set z-index based on position
+        // Adjust z-index for proper stacking
         if (offset === 0) {
             card.style.zIndex = 5;
         } else if (offset === 1 || offset === totalCards - 1) {
@@ -56,7 +56,7 @@ function updateCardsPosition() {
     });
 }
 
-// Rest of the code remains the same...
+// Rest of the JavaScript remains the same...
 function moveNext() {
     activeIndex = (activeIndex + 1) % totalCards;
     updateCardsPosition();
@@ -71,7 +71,6 @@ function movePrev() {
 nextBtn.addEventListener('click', moveNext);
 prevBtn.addEventListener('click', movePrev);
 
-// Add click handlers for cards
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
