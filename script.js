@@ -12,13 +12,13 @@ const cardUrls = {
     'card-contact': '/contact.html'
 };
 
-// Define positions for each card state
+// Adjusted position values for 700x400 cards
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -850, y: 300, rotate: -15, scale: 0.85 },    // Adjusted for new size
-    right: { x: 850, y: 300, rotate: 15, scale: 0.85 },     // Adjusted for new size
-    farLeft: { x: -1200, y: 500, rotate: -25, scale: 0.7 }, // Adjusted for new size
-    farRight: { x: 1200, y: 500, rotate: 25, scale: 0.7 }   // Adjusted for new size
+    left: { x: -850, y: 300, rotate: -15, scale: 0.85 },
+    right: { x: 850, y: 300, rotate: 15, scale: 0.85 },
+    farLeft: { x: -1200, y: 500, rotate: -25, scale: 0.7 },
+    farRight: { x: 1200, y: 500, rotate: 25, scale: 0.7 }
 };
 
 function updateCardsPosition() {
@@ -27,39 +27,35 @@ function updateCardsPosition() {
         const offset = (index - activeIndex + totalCards) % totalCards;
         
         switch(offset) {
-            case 0: // Active card (center)
+            case 0:
                 position = positions.center;
                 card.style.opacity = 1;
                 break;
-            case 1: // Next card (right)
+            case 1:
                 position = positions.right;
                 card.style.opacity = 0.8;
                 break;
-            case totalCards - 1: // Previous card (left)
+            case totalCards - 1:
                 position = positions.left;
                 card.style.opacity = 0.8;
                 break;
-            case 2: // Far next card (far right)
+            case 2:
                 position = positions.farRight;
                 card.style.opacity = 0.6;
                 break;
-            default: // Far previous card (far left)
+            default:
                 position = positions.farLeft;
                 card.style.opacity = 0.6;
                 break;
         }
 
-        // Apply transforms with easing
+        // Apply transforms
         card.style.transform = `
             translate(${position.x}px, ${position.y}px)
             rotate(${position.rotate}deg)
             scale(${position.scale})
         `;
         
-        // Update z-index
-        card.style.zIndex = offset === 0 ? 5 : 4 - Math.abs(offset);
-        
-        // Update cursor and active state
         if (offset === 0) {
             card.style.cursor = 'pointer';
             card.classList.add('active');
@@ -70,24 +66,16 @@ function updateCardsPosition() {
     });
 }
 
-function moveNext() {
-    activeIndex = (activeIndex + 1) % totalCards;
-    updateCardsPosition();
-}
-
-function movePrev() {
-    activeIndex = (activeIndex - 1 + totalCards) % totalCards;
-    updateCardsPosition();
-}
-
 // Handle keyboard navigation
 document.addEventListener('keydown', (e) => {
     switch(e.key) {
         case 'ArrowLeft':
-            movePrev();
+            activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+            updateCardsPosition();
             break;
         case 'ArrowRight':
-            moveNext();
+            activeIndex = (activeIndex + 1) % totalCards;
+            updateCardsPosition();
             break;
         case 'Enter':
             const activeCard = document.querySelector('.flash-card.active');
@@ -106,18 +94,17 @@ cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Navigate to corresponding page when active card is clicked
             const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
             if (cardClass && cardUrls[cardClass]) {
                 window.location.href = cardUrls[cardClass];
             }
         } else {
-            // Rotate carousel for non-active cards
             if (diff <= totalCards / 2) {
-                moveNext();
+                activeIndex = (activeIndex + 1) % totalCards;
             } else {
-                movePrev();
+                activeIndex = (activeIndex - 1 + totalCards) % totalCards;
             }
+            updateCardsPosition();
         }
     });
 });
