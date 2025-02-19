@@ -1,71 +1,58 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-    overflow: hidden;
-    margin: 0;
-}
-
 .carousel {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 800px;
+    height: 400px;
+    margin: 50px auto;
+    perspective: 1000px;
+    transform-style: preserve-3d;
 }
 
 .flash-card {
     position: absolute;
-    width: 350px;
-    height: 450px;
-    border-radius: 20px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    width: 300px;
+    height: 200px;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center -200px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    font-size: 1.8em;
-    font-weight: bold;
-    color: white;
-    transition: transform 0.6s ease, opacity 0.6s ease;
+    justify-content: center;
+    font-size: 24px;
 }
 
-.flash-card:nth-child(1) {
-    background-color: #4CAF50; /* Green */
+.flash-card:hover {
+    transform: scale(1.05) translateZ(20px);
 }
 
-.flash-card:nth-child(2) {
-    background-color: #FFA500; /* Orange */
-}
-
-.flash-card:nth-child(3) {
-    background-color: #1E90FF; /* Blue */
-}
-
-.flash-card:nth-child(4) {
-    background-color: #800080; /* Purple */
+.flash-card.active {
+    z-index: 10;
+    transform: scale(1.2);
 }
 
 .controls {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 20px;
 }
 
-.controls button {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 12px 24px;
+button {
+    padding: 10px 20px;
     cursor: pointer;
-    font-size: 1.2em;
-    border-radius: 8px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+    font-size: 16px;
 }
 
-.controls button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+button:hover {
+    background: #555;
 }

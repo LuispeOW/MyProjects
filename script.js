@@ -1,25 +1,59 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const cards = document.querySelectorAll(".flash-card");
-    const positions = ["position-0", "position-1", "position-2", "position-3"];
-    let currentIndex = 0;
+const carousel = document.querySelector('.carousel');
+const cards = document.querySelectorAll('.flash-card');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
 
-    function updatePositions() {
-        cards.forEach((card, i) => {
-            card.classList.remove(...positions);
-            let newIndex = (i - currentIndex + positions.length) % positions.length;
-            card.classList.add(positions[newIndex]);
-        });
-    }
+let currentRotation = 0;
+let activeIndex = 0;
+const totalCards = cards.length;
 
-    document.getElementById("next").addEventListener("click", function () {
-        currentIndex = (currentIndex + 1) % positions.length;
-        updatePositions();
+// Position cards in a circle
+function positionCards() {
+    cards.forEach((card, index) => {
+        const angle = (360 / totalCards) * index;
+        card.style.transform = `
+            rotateY(${angle}deg) 
+            translateZ(200px)
+            ${index === activeIndex ? 'scale(1.2)' : 'scale(1)'}
+        `;
+        card.classList.toggle('active', index === activeIndex);
     });
+}
 
-    document.getElementById("prev").addEventListener("click", function () {
-        currentIndex = (currentIndex - 1 + positions.length) % positions.length;
-        updatePositions();
+// Rotate to next card
+function rotateNext() {
+    activeIndex = (activeIndex + 1) % totalCards;
+    currentRotation -= 360 / totalCards;
+    updateCarousel();
+}
+
+// Rotate to previous card
+function rotatePrev() {
+    activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+    currentRotation += 360 / totalCards;
+    updateCarousel();
+}
+
+// Update carousel position
+function updateCarousel() {
+    carousel.style.transform = `rotateY(${currentRotation}deg)`;
+    positionCards();
+}
+
+// Event listeners
+nextBtn.addEventListener('click', rotateNext);
+prevBtn.addEventListener('click', rotatePrev);
+
+cards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+        const diff = index - activeIndex;
+        if (diff > 0) {
+            for (let i = 0; i < diff; i++) rotateNext();
+        } else if (diff < 0) {
+            for (let i = 0; i < Math.abs(diff); i++) rotatePrev();
+        }
     });
-
-    updatePositions(); // Initialize positions
 });
+
+// Initial setup
+positionCards();
