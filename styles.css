@@ -1,28 +1,31 @@
+/* General Page Styles */
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f4f4f4;
-    overflow: hidden;
     margin: 0;
+    font-family: Arial, sans-serif;
 }
 
+/* Carousel Wrapper */
 .carousel {
     display: flex;
-    width: 100%;
-    height: 80vh;
+    position: relative;
+    width: 300px;
+    height: 400px;
+    overflow: hidden;
     justify-content: center;
     align-items: center;
-    position: relative;
-    overflow: hidden;
 }
 
+/* Flash Cards */
 .flash-card {
     position: absolute;
     width: 250px;
     height: 350px;
-    background-color: white;
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -31,48 +34,39 @@ body {
     text-align: center;
     font-size: 1.5em;
     font-weight: bold;
+    color: white;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
+/* Flash Card Colors */
 .flash-card:nth-child(1) {
-    transform: translateX(-300px) scale(0.8);
-    opacity: 0.5;
     background-color: #4CAF50; /* Green */
-    color: white;
 }
 
 .flash-card:nth-child(2) {
-    transform: translateX(0px) scale(1);
-    opacity: 1;
-    background-color: #FF9800; /* Orange */
-    color: white;
+    background-color: #FFA500; /* Orange */
 }
 
 .flash-card:nth-child(3) {
-    transform: translateX(300px) scale(0.8);
-    opacity: 0.5;
     background-color: #2196F3; /* Blue */
-    color: white;
 }
 
 .flash-card:nth-child(4) {
-    transform: translateX(600px) scale(0.8);
-    opacity: 0.5;
     background-color: #9C27B0; /* Purple */
-    color: white;
 }
 
+/* Default Positioning */
 .flash-card.hidden {
     display: none;
 }
 
+/* Navigation Controls */
 .controls {
     position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: -60px;
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 
 .controls button {

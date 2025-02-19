@@ -3,28 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects - Flash Card Navigation</title>
+    <title>My Projects</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="flash-card-container">
-        <div class="flash-card" id="projects"> 
-            <h2>Projects</h2>
-            <p>Explore my latest builds and designs.</p>
-        </div>
-        <div class="flash-card" id="blog"> 
-            <h2>Blog</h2>
-            <p>Read about my experiences and thoughts.</p>
-        </div>
-        <div class="flash-card" id="about"> 
-            <h2>About Me</h2>
-            <p>Learn more about my journey and skills.</p>
-        </div>
-        <div class="flash-card" id="contact"> 
-            <h2>Contact</h2>
-            <p>Let's get in touch.</p>
-        </div>
+
+    <div class="carousel">
+        <div class="flash-card">Projects</div>
+        <div class="flash-card">Blog</div>
+        <div class="flash-card">About Me</div>
+        <div class="flash-card">Contact</div>
     </div>
+
+    <div class="controls">
+        <button id="prev">←</button>
+        <button id="next">→</button>
+    </div>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
