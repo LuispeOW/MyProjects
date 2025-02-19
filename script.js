@@ -9,10 +9,10 @@ const totalCards = cards.length;
 // Define positions for each card state
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -200, y: window.innerHeight * 0.4, rotate: -15, scale: 0.9 },
-    right: { x: 200, y: window.innerHeight * 0.4, rotate: 15, scale: 0.9 },
-    farLeft: { x: -400, y: window.innerHeight * 0.6, rotate: -30, scale: 0.8 },
-    farRight: { x: 400, y: window.innerHeight * 0.6, rotate: 30, scale: 0.8 }
+    left: { x: -300, y: window.innerHeight, rotate: -15, scale: 0.9 },
+    right: { x: 300, y: window.innerHeight, rotate: 15, scale: 0.9 },
+    farLeft: { x: -500, y: window.innerHeight * 1.5, rotate: -30, scale: 0.8 },
+    farRight: { x: 500, y: window.innerHeight * 1.5, rotate: 30, scale: 0.8 }
 };
 
 function updateCardsPosition() {
@@ -44,6 +44,8 @@ function updateCardsPosition() {
             rotate(${position.rotate}deg)
             scale(${position.scale})
         `;
+        
+        // Ensure proper stacking
         card.style.zIndex = offset === 0 ? 5 : 0;
     });
 }
@@ -80,4 +82,11 @@ cards.forEach((card, index) => {
 updateCardsPosition();
 
 // Handle window resize
-window.addEventListener('resize', updateCardsPosition);
+window.addEventListener('resize', () => {
+    // Update positions object with new window height
+    positions.left.y = window.innerHeight;
+    positions.right.y = window.innerHeight;
+    positions.farLeft.y = window.innerHeight * 1.5;
+    positions.farRight.y = window.innerHeight * 1.5;
+    updateCardsPosition();
+});
