@@ -9,61 +9,36 @@ body {
 }
 
 .carousel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     position: relative;
-    height: 80vh;
     width: 100vw;
-    overflow: hidden;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flash-card {
     position: absolute;
-    width: 350px;
-    height: 500px;
+    width: 320px;
+    height: 450px;
     border-radius: 20px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: bold;
     transition: transform 0.6s ease, opacity 0.6s ease;
-    color: white;
 }
 
-/* Assign unique colors */
-.flash-card:nth-child(1) {
-    background-color: #4CAF50; /* Green */
-    transform: translateY(-250px) scale(0.7);
-    opacity: 0.5;
-    z-index: 1;
-}
+/* Unique colors for each card */
+.flash-card:nth-child(1) { background-color: #4CAF50; color: white; } /* Green */
+.flash-card:nth-child(2) { background-color: #FFB74D; color: white; } /* Orange */
+.flash-card:nth-child(3) { background-color: #64B5F6; color: white; } /* Blue */
+.flash-card:nth-child(4) { background-color: #BA68C8; color: white; } /* Purple */
 
-.flash-card:nth-child(2) {
-    background-color: #FF9800; /* Orange */
-    transform: translateY(-100px) scale(0.85);
-    opacity: 0.7;
-    z-index: 2;
-}
-
-.flash-card:nth-child(3) {
-    background-color: #2196F3; /* Blue */
-    transform: translateY(50px) scale(1);
-    opacity: 1;
-    z-index: 3;
-}
-
-.flash-card:nth-child(4) {
-    background-color: #9C27B0; /* Purple */
-    transform: translateY(200px) scale(0.85);
-    opacity: 0.7;
-    z-index: 2;
-}
-
+/* Controls */
 .controls {
     position: absolute;
     width: 100%;
