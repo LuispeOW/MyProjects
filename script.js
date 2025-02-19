@@ -1,7 +1,5 @@
 const carousel = document.querySelector('.carousel');
 const cards = document.querySelectorAll('.flash-card');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
 
 let activeIndex = 0;
 const totalCards = cards.length;
@@ -54,7 +52,6 @@ function updateCardsPosition() {
         
         card.style.zIndex = offset === 0 ? 5 : 4;
         
-        // Make active card clickable for navigation
         if (offset === 0) {
             card.style.cursor = 'pointer';
             card.classList.add('active');
@@ -75,9 +72,27 @@ function movePrev() {
     updateCardsPosition();
 }
 
-// Event listeners
-prevBtn.addEventListener('click', moveNext);
-nextBtn.addEventListener('click', movePrev);
+// Handle keyboard navigation
+document.addEventListener('keydown', (e) => {
+    switch(e.key) {
+        case 'ArrowLeft':
+            movePrev();
+            break;
+        case 'ArrowRight':
+            moveNext();
+            break;
+        case 'Enter':
+            // Navigate when Enter is pressed on active card
+            const activeCard = document.querySelector('.flash-card.active');
+            if (activeCard) {
+                const cardClass = Array.from(activeCard.classList).find(cls => cls.startsWith('card-'));
+                if (cardClass && cardUrls[cardClass]) {
+                    window.location.href = cardUrls[cardClass];
+                }
+            }
+            break;
+    }
+});
 
 // Add click handlers for cards
 cards.forEach((card, index) => {
