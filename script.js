@@ -12,13 +12,13 @@ const cardUrls = {
     'card-contact': '/contact.html'
 };
 
-// Adjusted positions to ensure all cards are visible
+// Define positions for each card state
 const positions = {
     center: { x: 0, y: 0, rotate: 0, scale: 1 },
-    left: { x: -500, y: 200, rotate: -15, scale: 0.85 },    // Adjusted left position
-    right: { x: 500, y: 200, rotate: 15, scale: 0.85 },     // Adjusted right position
-    farLeft: { x: -800, y: 300, rotate: -25, scale: 0.7 },  // Adjusted far left
-    farRight: { x: 800, y: 300, rotate: 25, scale: 0.7 }    // Adjusted far right
+    left: { x: -750, y: 300, rotate: -15, scale: 0.85 },    // Adjusted for larger cards
+    right: { x: 750, y: 300, rotate: 15, scale: 0.85 },     // Adjusted for larger cards
+    farLeft: { x: -1100, y: 400, rotate: -25, scale: 0.7 }, // Adjusted for larger cards
+    farRight: { x: 1100, y: 400, rotate: 25, scale: 0.7 }   // Adjusted for larger cards
 };
 
 function updateCardsPosition() {
@@ -106,11 +106,13 @@ cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
+            // Navigate to corresponding page when active card is clicked
             const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
             if (cardClass && cardUrls[cardClass]) {
                 window.location.href = cardUrls[cardClass];
             }
         } else {
+            // Rotate carousel for non-active cards
             if (diff <= totalCards / 2) {
                 moveNext();
             } else {
@@ -120,8 +122,8 @@ cards.forEach((card, index) => {
     });
 });
 
-// Initial setup
-updateCardsPosition();
-
 // Handle window resize
 window.addEventListener('resize', updateCardsPosition);
+
+// Initial setup
+updateCardsPosition();

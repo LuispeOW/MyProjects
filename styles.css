@@ -36,24 +36,26 @@ h1 {
     align-items: center;
 }
 
+/* Update card dimensions */
 .flash-card {
     position: absolute;
-    width: 400px;
-    height: 250px;
+    width: 600px;    /* Increased from 400px */
+    height: 350px;   /* Increased from 250px */
     cursor: pointer;
-    transition: all 0.8s ease-in-out;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 25px;  /* Slightly larger border radius */
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 48px;  /* Increased font size */
     text-align: center;
     color: white;
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;  /* Increased letter spacing */
     backdrop-filter: blur(5px);
+    will-change: transform, opacity;
 }
 
 .card-projects {
