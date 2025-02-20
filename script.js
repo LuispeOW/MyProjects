@@ -23,6 +23,11 @@ function updateCardsPosition() {
         let position;
         const offset = (index - activeIndex + totalCards) % totalCards;
         
+        // Don't update position if card is flipped
+        if (card.classList.contains('flipped')) {
+            return;
+        }
+
         switch(offset) {
             case 0: // Active card (center)
                 position = positions.center;
@@ -53,12 +58,14 @@ function updateCardsPosition() {
                 break;
         }
 
-        // Add Z translation to transform
-        card.style.transform = `
-            translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
-            rotate(${position.rotate}deg)
-            scale(${position.scale})
-        `;
+        // Modify the transform application
+        if (!card.classList.contains('flipped')) {
+            card.style.transform = `
+                translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
+                rotate(${position.rotate}deg)
+                scale(${position.scale})
+            `;
+        }
         
         if (offset === 0) {
             card.style.cursor = 'pointer';
@@ -96,13 +103,25 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Modify the click handler for cards
+// Modify the click handler
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Flip the active card
+            // Remove all other flipped cards first
+            cards.forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('flipped');
+                }
+            });
+            // Toggle the clicked card
             card.classList.toggle('flipped');
+            // Reset transforms when flipping
+            if (card.classList.contains('flipped')) {
+                card.style.transform = 'translate(-50%, -50%)';
+            } else {
+                updateCardsPosition();
+            }
         } else {
             // Rotate carousel
             if (diff <= totalCards / 2) {
