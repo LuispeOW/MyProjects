@@ -14,11 +14,6 @@ const positions = {
 };
 
 function updateCardsPosition() {
-    // First pass: reset all cards to base layer
-    cards.forEach(card => {
-        card.style.zIndex = "1";
-    });
-
     cards.forEach((card, index) => {
         // Skip positioning update if card is flipped
         if (card.classList.contains('flipped')) {
@@ -29,12 +24,10 @@ function updateCardsPosition() {
         const offset = (index - activeIndex + totalCards) % totalCards;
         
         switch(offset) {
-            case 0: // Active card (center)
+            case 0: // Active card
                 position = positions.center;
                 card.style.opacity = 1;
-                // Force highest z-index through both style and transform
                 card.style.zIndex = "1000";
-                position.z = 100; // Add Z translation
                 break;
             case 1: // Next card (right)
                 position = positions.right;
@@ -58,12 +51,16 @@ function updateCardsPosition() {
                 break;
         }
 
-        // Add Z translation to transform
-        card.style.transform = `
-            translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
-            rotate(${position.rotate}deg)
-            scale(${position.scale})
-        `;
+        // Only apply transform if card is not flipped
+        if (!card.classList.contains('flipped')) {
+            requestAnimationFrame(() => {
+                card.style.transform = `
+                    translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
+                    rotate(${position.rotate}deg)
+                    scale(${position.scale})
+                `;
+            });
+        }
         
         if (offset === 0) {
             card.style.cursor = 'pointer';
@@ -101,17 +98,28 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Update the click handler
+// Update click handler
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Remove flipped class from all other cards first
+            // Add transition class before flipping
+            card.classList.add('transitioning');
+            
+            // Remove flipped class from all other cards
             cards.forEach(c => {
                 if (c !== card) c.classList.remove('flipped');
             });
+            
             // Toggle the clicked card
-            card.classList.toggle('flipped');
+            requestAnimationFrame(() => {
+                card.classList.toggle('flipped');
+            });
+            
+            // Remove transition class after animation
+            setTimeout(() => {
+                card.classList.remove('transitioning');
+            }, 800);
         } else {
             // Existing rotation logic
             if (diff <= totalCards / 2) {
