@@ -35,32 +35,25 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    perspective: 2000px;
 }
 
-.carousel .flash-card {
+.flash-card {
     position: absolute;
     width: 700px !important;
     height: 400px !important;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 25px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 64px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    will-change: transform, opacity, filter, box-shadow;
-    perspective: 1000px;
+    transform-style: preserve-3d;
 }
 
 /* Add specific z-index for active card */
 .flash-card.active {
-    z-index: 1000 !important; /* Force highest z-index */
+    z-index: 1000 !important;
 }
 
 /* Ensure inactive cards stay below */
@@ -68,21 +61,78 @@ h1 {
     z-index: 1;
 }
 
-/* Individual card styles */
-.carousel .flash-card.card-projects {
+.flash-card.flipped {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 95vw !important;
+    height: 85vh !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 9999 !important;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.flash-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    font-size: 4rem; /* Ensure text size is large */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background: inherit;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+/* Individual card styles with proper border radius */
+.carousel .flash-card.card-projects,
+.carousel .flash-card.card-projects .card-front,
+.carousel .flash-card.card-projects .card-back {
     background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+    border-radius: 25px;
 }
 
-.carousel .flash-card.card-blog {
+.carousel .flash-card.card-blog,
+.carousel .flash-card.card-blog .card-front,
+.carousel .flash-card.card-blog .card-back {
     background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
+    border-radius: 25px;
 }
 
-.carousel .flash-card.card-about {
+.carousel .flash-card.card-about,
+.carousel .flash-card.card-about .card-front,
+.carousel .flash-card.card-about .card-back {
     background: linear-gradient(135deg, #29b6f6 0%, #0288d1 100%);
+    border-radius: 25px;
 }
 
-.carousel .flash-card.card-contact {
+.carousel .flash-card.card-contact,
+.carousel .flash-card.card-contact .card-front,
+.carousel .flash-card.card-contact .card-back {
     background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
+    border-radius: 25px;
 }
 
 .carousel .flash-card:hover {
@@ -111,42 +161,6 @@ h1 {
 
 .card-contact:hover {
     background: linear-gradient(135deg, #9C27B0 0%, #8e24aa 100%);
-}
-
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-}
-
-.flash-card.flipped .card-inner {
-    transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 25px;
-}
-
-.card-front {
-    font-size: 64px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-}
-
-.card-back {
-    transform: rotateY(180deg);
-    padding: 20px;
-    overflow-y: auto;
 }
 
 .editable-content {
