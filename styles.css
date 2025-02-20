@@ -35,6 +35,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    perspective: 2000px; /* Add perspective to parent */
 }
 
 .carousel .flash-card {
@@ -56,6 +57,7 @@ h1 {
     letter-spacing: 4px;
     will-change: transform, opacity, filter, box-shadow;
     perspective: 1000px;
+    transform-style: preserve-3d; /* Enable 3D space for children */
 }
 
 /* Add specific z-index for active card */
@@ -122,14 +124,21 @@ h1 {
     transform-style: preserve-3d;
 }
 
-.flash-card.flipped .card-inner {
-    transform: rotateY(180deg);
+.flash-card.flipped {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 90vw !important;
+    height: 90vh !important;
+    transform: translate(-50%, -50%) rotateY(180deg) !important;
+    z-index: 2000 !important;
 }
 
 .card-front, .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     display: flex;
     align-items: center;
@@ -145,6 +154,7 @@ h1 {
 
 .card-back {
     transform: rotateY(180deg);
+    background: inherit;
     padding: 20px;
     overflow-y: auto;
 }

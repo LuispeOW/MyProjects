@@ -20,6 +20,11 @@ function updateCardsPosition() {
     });
 
     cards.forEach((card, index) => {
+        // Skip positioning update if card is flipped
+        if (card.classList.contains('flipped')) {
+            return;
+        }
+        
         let position;
         const offset = (index - activeIndex + totalCards) % totalCards;
         
@@ -96,20 +101,32 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Add click handlers for cards
+// Update the click handler
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Flip the active card instead of navigation
+            // Only flip if it's the active card
             card.classList.toggle('flipped');
         } else {
-            // Rotate carousel
+            // Existing rotation logic
             if (diff <= totalCards / 2) {
                 activeIndex = (activeIndex + 1) % totalCards;
             } else {
                 activeIndex = (activeIndex - 1 + totalCards) % totalCards;
             }
+            updateCardsPosition();
+        }
+    });
+});
+
+// Add back button handler
+document.querySelectorAll('.back-home').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = button.closest('.flash-card');
+        if (card) {
+            card.classList.remove('flipped');
             updateCardsPosition();
         }
     });
