@@ -14,50 +14,71 @@ const positions = {
 };
 
 function updateCardsPosition() {
+    // First pass: reset all cards to base layer
+    cards.forEach(card => {
+        card.style.zIndex = "1";
+    });
+
     cards.forEach((card, index) => {
-        // Skip positioning for flipped cards
+        let position;
+        const offset = (index - activeIndex + totalCards) % totalCards;
+        
+        // Don't update position if card is flipped
         if (card.classList.contains('flipped')) {
             return;
         }
 
-        let position;
-        const offset = (index - activeIndex + totalCards) % totalCards;
-        
         switch(offset) {
-            case 0: // Active card
+            case 0: // Active card (center)
                 position = positions.center;
                 card.style.opacity = 1;
+                // Force highest z-index through both style and transform
                 card.style.zIndex = "1000";
-                card.classList.add('active');
+                position.z = 100; // Add Z translation
                 break;
-            case 1: // Right card
+            case 1: // Next card (right)
                 position = positions.right;
                 card.style.opacity = 0.8;
-                card.classList.remove('active');
+                position.z = 0;
                 break;
-            case totalCards - 1: // Left card
+            case totalCards - 1: // Previous card (left)
                 position = positions.left;
                 card.style.opacity = 0.8;
-                card.classList.remove('active');
+                position.z = 0;
                 break;
-            case 2: // Far right
+            case 2: // Far next card
                 position = positions.farRight;
                 card.style.opacity = 0.6;
-                card.classList.remove('active');
+                position.z = -100;
                 break;
-            default: // Far left
+            default: // Far previous card
                 position = positions.farLeft;
                 card.style.opacity = 0.6;
-                card.classList.remove('active');
+                position.z = -100;
                 break;
         }
 
+        // Modify the transform application
         if (!card.classList.contains('flipped')) {
             card.style.transform = `
                 translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
                 rotate(${position.rotate}deg)
                 scale(${position.scale})
             `;
+        }
+        
+        if (offset === 0) {
+            card.style.cursor = 'pointer';
+            card.classList.add('active');
+        } else {
+            card.style.cursor = 'default';
+            card.classList.remove('active');
+        }
+    });
+
+    cards.forEach(card => {
+        if (!card.classList.contains('active')) {
+            card.classList.remove('flipped');
         }
     });
 }
@@ -82,36 +103,44 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Modify click handler
+// Modify the click handler
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Handle flip
+            // Remove all other flipped cards first
             cards.forEach(c => {
                 if (c !== card) {
                     c.classList.remove('flipped');
                 }
             });
+            // Toggle the clicked card
             card.classList.toggle('flipped');
+            // Reset transforms when flipping
+            if (card.classList.contains('flipped')) {
+                card.style.transform = 'translate(-50%, -50%)';
+            } else {
+                updateCardsPosition();
+            }
         } else {
-            // Handle rotation
-            activeIndex = (diff <= totalCards / 2) 
-                ? (activeIndex + 1) % totalCards 
-                : (activeIndex - 1 + totalCards) % totalCards;
+            // Rotate carousel
+            if (diff <= totalCards / 2) {
+                activeIndex = (activeIndex + 1) % totalCards;
+            } else {
+                activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+            }
             updateCardsPosition();
         }
     });
 });
 
-// Back home button handler
+// Add back home button functionality
 document.querySelectorAll('.back-home').forEach(button => {
     button.addEventListener('click', (e) => {
-        e.stopPropagation();
+        e.stopPropagation(); // Prevent card click event
         const card = button.closest('.flash-card');
         if (card) {
             card.classList.remove('flipped');
-            updateCardsPosition();
         }
     });
 });
