@@ -27,29 +27,33 @@ function updateCardsPosition() {
         const offset = (index - activeIndex + totalCards) % totalCards;
         
         switch(offset) {
-            case 0:
+            case 0: // Active card (center)
                 position = positions.center;
                 card.style.opacity = 1;
+                card.style.zIndex = 10;  // Increased z-index for center card
                 break;
-            case 1:
+            case 1: // Next card (right)
                 position = positions.right;
                 card.style.opacity = 0.8;
+                card.style.zIndex = 5;   // Lower z-index for side cards
                 break;
-            case totalCards - 1:
+            case totalCards - 1: // Previous card (left)
                 position = positions.left;
                 card.style.opacity = 0.8;
+                card.style.zIndex = 5;   // Lower z-index for side cards
                 break;
-            case 2:
+            case 2: // Far next card
                 position = positions.farRight;
                 card.style.opacity = 0.6;
+                card.style.zIndex = 1;   // Lowest z-index for hidden cards
                 break;
-            default:
+            default: // Far previous card
                 position = positions.farLeft;
                 card.style.opacity = 0.6;
+                card.style.zIndex = 1;   // Lowest z-index for hidden cards
                 break;
         }
 
-        // Apply transforms
         card.style.transform = `
             translate(${position.x}px, ${position.y}px)
             rotate(${position.rotate}deg)
@@ -65,6 +69,7 @@ function updateCardsPosition() {
         }
     });
 }
+
 
 // Handle keyboard navigation
 document.addEventListener('keydown', (e) => {
