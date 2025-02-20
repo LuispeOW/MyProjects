@@ -89,3 +89,28 @@ h1 {
 .carousel .flash-card:hover {
     box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 }
+
+/* Add hover effects */
+.flash-card:hover {
+    transform: scale(1.05) translateZ(50px) !important; /* Pop out effect */
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4); /* Enhanced shadow */
+    filter: brightness(1.1); /* Subtle brightness increase */
+    transition: all 0.3s ease-out; /* Faster transition for hover */
+}
+
+/* Specific gradient overlays on hover */
+.card-projects:hover {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.card-blog:hover {
+    background: linear-gradient(135deg, #FF5722 0%, #f4511e 100%);
+}
+
+.card-about:hover {
+    background: linear-gradient(135deg, #2196F3 0%, #1e88e5 100%);
+}
+
+.card-contact:hover {
+    background: linear-gradient(135deg, #9C27B0 0%, #8e24aa 100%);
+}
