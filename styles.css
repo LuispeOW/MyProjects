@@ -148,10 +148,10 @@ h1 {
 
 .flash-card.flipped {
     position: fixed !important;
-    top: 45% !important;
+    top: 50% !important;
     left: 50% !important;
-    width: 95vw !important;
-    height: 85vh !important;
+    width: 98vw !important; /* Almost full width */
+    height: 95vh !important; /* Almost full height */
     transform: translate(-50%, -50%) !important;
     z-index: 9999 !important;
 }
@@ -161,7 +161,6 @@ h1 {
 }
 
 .back-content {
-    transform: rotateY(180deg); /* Counter-rotate the content */
     width: 100%;
     height: 100%;
     display: flex;
@@ -170,6 +169,7 @@ h1 {
     justify-content: space-between;
     padding: 40px;
     box-sizing: border-box;
+    transform: rotateY(180deg); /* Fix mirrored text */
 }
 
 .back-content h2 {
@@ -217,4 +217,16 @@ h1 {
 
 .back-home:hover {
     background: rgba(255, 255, 255, 0.3);
+}
+
+/* Ensure the card appears above the title */
+.flash-card.flipped {
+    position: fixed !important;
+    z-index: 10000 !important; /* Higher than other elements */
+}
+
+/* Ensure rounded corners are visible */
+.card-front, .card-back, .flash-card {
+    border-radius: 25px;
+    overflow: hidden;
 }
