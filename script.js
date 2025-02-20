@@ -96,12 +96,12 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Add click handlers for cards
+// Modify the click handler for cards
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Flip the active card instead of navigation
+            // Flip the active card
             card.classList.toggle('flipped');
         } else {
             // Rotate carousel
@@ -111,6 +111,17 @@ cards.forEach((card, index) => {
                 activeIndex = (activeIndex - 1 + totalCards) % totalCards;
             }
             updateCardsPosition();
+        }
+    });
+});
+
+// Add back home button functionality
+document.querySelectorAll('.back-home').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click event
+        const card = button.closest('.flash-card');
+        if (card) {
+            card.classList.remove('flipped');
         }
     });
 });
@@ -147,29 +158,7 @@ cards.forEach(card => {
             card.style.boxShadow = '0 20px 50px rgba(0,0,0,0.3)';
         }
     });
-
-    // Separate click handler
-    card.addEventListener('click', () => {
-        const diff = (index - activeIndex + totalCards) % totalCards;
-        if (diff === 0) {
-            // Only navigate if it's the active card
-            const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
-            if (cardClass && cardUrls[cardClass]) {
-                window.location.href = cardUrls[cardClass];
-            }
-        } else {
-            // Rotate carousel
-            if (diff <= totalCards / 2) {
-                activeIndex = (activeIndex + 1) % totalCards;
-            } else {
-                activeIndex = (activeIndex - 1 + totalCards) % totalCards;
-            }
-            updateCardsPosition();
-        }
-    });
 });
-
-// Rest of your JavaScript remains the same
 
 // Handle window resize
 window.addEventListener('resize', updateCardsPosition);
