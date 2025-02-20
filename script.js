@@ -14,11 +14,11 @@ const cardUrls = {
 
 // Adjusted position values for 700x400 cards
 const positions = {
-    center: { x: 0, y: -150, rotate: 0, scale: 1 },           // Moved up
-    left: { x: -650, y: 100, rotate: -15, scale: 0.85 },     // Moved up
-    right: { x: 650, y: 100, rotate: 15, scale: 0.85 },      // Moved up
-    farLeft: { x: 0, y: -500, rotate: 0, scale: 0.5 },  // Moved up
-    farRight: { x: 0, y: -500, rotate: 0, scale: 0.5 }    // Moved up
+    center: { x: 0, y: 50, rotate: 0, scale: 1 },            // Moved down
+    left: { x: -600, y: 200, rotate: -15, scale: 0.85 },     // Brought closer and moved down
+    right: { x: 600, y: 200, rotate: 15, scale: 0.85 },      // Brought closer and moved down
+    farLeft: { x: -600, y: 800, rotate: -15, scale: 0.7 },   // Brought closer
+    farRight: { x: 600, y: 800, rotate: 15, scale: 0.7 }     // Maintains below-screen position
 };
 
 function updateCardsPosition() {
