@@ -25,7 +25,7 @@ h1 {
     width: 100%;
     height: calc(100% - 120px);
     overflow: hidden;
-    top: 150px; /* Adjust this value to move entire carousel up */
+    top: 100px; /* Adjust this value to move entire carousel up */
 }
 
 .carousel {

@@ -17,8 +17,8 @@ const positions = {
     center: { x: 0, y: -150, rotate: 0, scale: 1 },           // Moved up
     left: { x: -650, y: 100, rotate: -15, scale: 0.85 },     // Moved up
     right: { x: 650, y: 100, rotate: 15, scale: 0.85 },      // Moved up
-    farLeft: { x: 0, y: -500, rotate: -25, scale: 0.5 },  // Moved up
-    farRight: { x: 0, y: -500, rotate: 25, scale: 0.5 }    // Moved up
+    farLeft: { x: 0, y: -500, rotate: 0, scale: 0.5 },  // Moved up
+    farRight: { x: 0, y: -500, rotate: 0, scale: 0.5 }    // Moved up
 };
 
 function updateCardsPosition() {
