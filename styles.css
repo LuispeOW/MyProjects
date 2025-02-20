@@ -18,14 +18,13 @@ h1 {
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     letter-spacing: 4px;
+    z-index: 1;
+    position: relative;
 }
 
 .carousel-container {
-    position: fixed;
-    width: 100%;
-    height: calc(100% - 120px);
-    overflow: hidden;
-    top: 100px; /* Adjust this value to move entire carousel up */
+    position: relative;
+    z-index: 9999;
 }
 
 .carousel {
@@ -35,7 +34,8 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 2000px; /* Add perspective for 3D effect */
+    perspective: 2000px;
+    transform: translateY(200px);
 }
 
 .carousel .flash-card {
@@ -56,14 +56,14 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 4px;
     will-change: transform, opacity, filter, box-shadow;
+    transform-style: preserve-3d;
+    z-index: 10000;
 }
 
-/* Add specific z-index for active card */
 .flash-card.active {
-    z-index: 1000 !important; /* Force highest z-index */
+    z-index: 10001 !important;
 }
 
-/* Ensure inactive cards stay below */
 .flash-card:not(.active) {
     z-index: 1;
 }
@@ -150,10 +150,10 @@ h1 {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    width: 98vw !important; /* Almost full width */
-    height: 95vh !important; /* Almost full height */
-    transform: translate(-50%, -50%) !important;
-    z-index: 9999 !important;
+    width: 98vw !important;
+    height: 95vh !important;
+    transform: translate(-50%, -55%) !important;
+    z-index: 999999 !important;
 }
 
 .flash-card.flipped .card-inner {
@@ -169,7 +169,7 @@ h1 {
     justify-content: space-between;
     padding: 40px;
     box-sizing: border-box;
-    transform: rotateY(180deg); /* Fix mirrored text */
+    transform: rotateY(0deg); /* Remove the extra rotation */
 }
 
 .back-content h2 {
@@ -219,14 +219,19 @@ h1 {
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* Ensure the card appears above the title */
-.flash-card.flipped {
-    position: fixed !important;
-    z-index: 10000 !important; /* Higher than other elements */
-}
-
 /* Ensure rounded corners are visible */
 .card-front, .card-back, .flash-card {
     border-radius: 25px;
     overflow: hidden;
+}
+
+/* Ensure other page elements stay behind */
+body > * {
+    z-index: 1;
+}
+
+/* Force other elements to stay behind */
+header, main, footer {
+    z-index: 1;
+    position: relative;
 }
