@@ -36,6 +36,7 @@ h1 {
     justify-content: center;
     align-items: center;
     perspective: 2000px;
+    z-index: 1;
 }
 
 .flash-card {
@@ -49,14 +50,16 @@ h1 {
     align-items: center;
     justify-content: center;
     transform-style: preserve-3d;
+    font-size: 5rem; /* Increased base font size */
 }
 
-/* Add specific z-index for active card */
+/* Ensure active card is always on top */
 .flash-card.active {
     z-index: 1000 !important;
+    transform: translateZ(100px) !important; /* Push active card forward in 3D space */
 }
 
-/* Ensure inactive cards stay below */
+/* Keep inactive cards behind */
 .flash-card:not(.active) {
     z-index: 1;
 }
@@ -68,7 +71,7 @@ h1 {
     width: 95vw !important;
     height: 85vh !important;
     transform: translate(-50%, -50%) !important;
-    z-index: 9999 !important;
+    z-index: 9999 !important; /* Ensure flipped card is above everything */
 }
 
 .card-inner {
@@ -94,9 +97,10 @@ h1 {
     align-items: center;
     justify-content: center;
     border-radius: 25px;
-    font-size: 4rem; /* Ensure text size is large */
+    font-size: 6rem; /* Increased font size */
     text-transform: uppercase;
     letter-spacing: 4px;
+    font-weight: bold; /* Make text bolder */
 }
 
 .card-back {
@@ -175,4 +179,15 @@ h1 {
     outline: none;
     text-transform: none;
     letter-spacing: normal;
+}
+
+/* Adjust text size for back content */
+.back-content h2 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+.back-content p {
+    font-size: 2rem;
+    line-height: 1.6;
 }
