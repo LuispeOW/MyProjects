@@ -122,10 +122,9 @@ cards.forEach((card, index) => {
     });
 });
 
-// Add this function to handle hover effects
 function getTransform(position, isHovered = false) {
-    const scale = isHovered ? position.scale * 1.05 : position.scale;
-    const z = isHovered ? (position.z || 0) + 50 : position.z || 0;
+    const scale = isHovered ? position.scale * 1.1 : position.scale; // Slightly larger scale on hover
+    const z = isHovered ? (position.z || 0) + 30 : position.z || 0; // Slight pop out effect
     
     return `
         translate3d(${position.x}px, ${position.y}px, ${z}px)
@@ -189,19 +188,43 @@ function updateCardsPosition() {
 
 // Add hover event listeners
 cards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
+    card.addEventListener('mouseenter', (e) => {
+        // Prevent event from triggering click
+        e.stopPropagation();
         if (card.position) {
             card.style.transform = getTransform(card.position, true);
-            card.style.filter = 'brightness(1.1)';
+            card.style.filter = 'brightness(1.2)';
             card.style.boxShadow = '0 25px 60px rgba(0,0,0,0.4)';
         }
     });
 
-    card.addEventListener('mouseleave', () => {
+    card.addEventListener('mouseleave', (e) => {
+        // Prevent event from triggering click
+        e.stopPropagation();
         if (card.position) {
             card.style.transform = getTransform(card.position, false);
             card.style.filter = 'none';
             card.style.boxShadow = '0 20px 50px rgba(0,0,0,0.3)';
+        }
+    });
+
+    // Separate click handler
+    card.addEventListener('click', () => {
+        const diff = (index - activeIndex + totalCards) % totalCards;
+        if (diff === 0) {
+            // Only navigate if it's the active card
+            const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
+            if (cardClass && cardUrls[cardClass]) {
+                window.location.href = cardUrls[cardClass];
+            }
+        } else {
+            // Rotate carousel
+            if (diff <= totalCards / 2) {
+                activeIndex = (activeIndex + 1) % totalCards;
+            } else {
+                activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+            }
+            updateCardsPosition();
         }
     });
 });
