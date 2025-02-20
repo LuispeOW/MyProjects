@@ -122,6 +122,92 @@ cards.forEach((card, index) => {
     });
 });
 
+// Add this function to handle hover effects
+function getTransform(position, isHovered = false) {
+    const scale = isHovered ? position.scale * 1.05 : position.scale;
+    const z = isHovered ? (position.z || 0) + 50 : position.z || 0;
+    
+    return `
+        translate3d(${position.x}px, ${position.y}px, ${z}px)
+        rotate(${position.rotate}deg)
+        scale(${scale})
+    `;
+}
+
+function updateCardsPosition() {
+    // First pass: reset all cards to base layer
+    cards.forEach(card => {
+        card.style.zIndex = "1";
+    });
+
+    cards.forEach((card, index) => {
+        let position;
+        const offset = (index - activeIndex + totalCards) % totalCards;
+        
+        switch(offset) {
+            case 0:
+                position = positions.center;
+                card.style.opacity = 1;
+                card.style.zIndex = "1000";
+                position.z = 100;
+                break;
+            case 1:
+                position = positions.right;
+                card.style.opacity = 0.8;
+                position.z = 0;
+                break;
+            case totalCards - 1:
+                position = positions.left;
+                card.style.opacity = 0.8;
+                position.z = 0;
+                break;
+            case 2:
+                position = positions.farRight;
+                card.style.opacity = 0.6;
+                position.z = -100;
+                break;
+            default:
+                position = positions.farLeft;
+                card.style.opacity = 0.6;
+                position.z = -100;
+                break;
+        }
+
+        // Store the position on the card element for hover handling
+        card.position = position;
+        card.style.transform = getTransform(position);
+        
+        if (offset === 0) {
+            card.style.cursor = 'pointer';
+            card.classList.add('active');
+        } else {
+            card.style.cursor = 'default';
+            card.classList.remove('active');
+        }
+    });
+}
+
+// Add hover event listeners
+cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        if (card.position) {
+            card.style.transform = getTransform(card.position, true);
+            card.style.filter = 'brightness(1.1)';
+            card.style.boxShadow = '0 25px 60px rgba(0,0,0,0.4)';
+        }
+    });
+
+    card.addEventListener('mouseleave', () => {
+        if (card.position) {
+            card.style.transform = getTransform(card.position, false);
+            card.style.filter = 'none';
+            card.style.boxShadow = '0 20px 50px rgba(0,0,0,0.3)';
+        }
+    });
+});
+
+// Rest of your JavaScript remains the same
+
 // Handle window resize
 window.addEventListener('resize', updateCardsPosition);
 

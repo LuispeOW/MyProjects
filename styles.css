@@ -37,13 +37,12 @@ h1 {
     align-items: center;
 }
 
-/* Make card styles more specific */
 .carousel .flash-card {
     position: absolute;
-    width: 700px !important;  /* Force width */
-    height: 400px !important; /* Force height */
+    width: 700px !important;
+    height: 400px !important;
     cursor: pointer;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 25px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     display: flex;
@@ -55,8 +54,7 @@ h1 {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 4px;
-    backdrop-filter: blur(5px);
-    will-change: transform, opacity;
+    will-change: transform, opacity, filter, box-shadow;
 }
 
 /* Add specific z-index for active card */
@@ -92,7 +90,6 @@ h1 {
 
 /* Add hover effects */
 .flash-card:hover {
-    transform: scale(1.05) translateZ(50px) !important; /* Pop out effect */
     box-shadow: 0 25px 60px rgba(0,0,0,0.4); /* Enhanced shadow */
     filter: brightness(1.1); /* Subtle brightness increase */
     transition: all 0.3s ease-out; /* Faster transition for hover */
