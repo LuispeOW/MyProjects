@@ -106,7 +106,11 @@ cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Only flip if it's the active card
+            // Remove flipped class from all other cards first
+            cards.forEach(c => {
+                if (c !== card) c.classList.remove('flipped');
+            });
+            // Toggle the clicked card
             card.classList.toggle('flipped');
         } else {
             // Existing rotation logic
