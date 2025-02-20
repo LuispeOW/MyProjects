@@ -35,28 +35,16 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 2000px; /* Add perspective to the carousel container */
+    perspective: 3000px; /* Increased perspective for better 3D effect */
 }
 
 .carousel .flash-card {
     position: absolute;
-    width: 700px !important;
-    height: 400px !important;
-    cursor: pointer;
+    width: 700px;
+    height: 400px;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 25px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 64px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    will-change: transform, opacity, filter, box-shadow;
     transform-style: preserve-3d;
+    cursor: pointer;
 }
 
 /* Add specific z-index for active card */
@@ -123,61 +111,63 @@ h1 {
     transform-style: preserve-3d;
 }
 
-.flash-card.flipped {
-    z-index: 2000 !important;
-    width: 90vw !important;
-    height: 90vh !important;
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    transform-style: preserve-3d;
-}
-
-.flash-card.flipped .card-inner {
-    transform: rotateY(180deg);
-}
-
 .card-front, .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Add webkit prefix */
     backface-visibility: hidden;
-    transform-style: preserve-3d; /* Add preserve-3d */
+    -webkit-backface-visibility: hidden;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-front {
+    background: inherit;
     font-size: 64px;
     text-transform: uppercase;
     letter-spacing: 4px;
 }
 
 .card-back {
+    background: inherit;
     transform: rotateY(180deg);
-    background: inherit; /* Inherit the card's gradient background */
-    padding: 20px;
-    overflow-y: auto;
 }
 
-/* Adjust text sizes for the expanded state */
-.flash-card.flipped .back-content h2 {
-    font-size: 3vw;
-    margin-bottom: 2vh;
+.flash-card.flipped {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 90vw !important;
+    height: 90vh !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 2000 !important;
 }
 
-.flash-card.flipped .back-content p {
-    font-size: 1.5vw;
-    line-height: 1.6;
-    margin-bottom: 4vh;
+.flash-card.flipped .card-inner {
+    transform: rotateY(180deg);
 }
 
-/* Ensure the button stays at the bottom */
-.flash-card.flipped .back-home {
-    position: absolute;
-    bottom: 5vh;
-    font-size: 1.2vw;
-    padding: 1vh 2vw;
+.back-content {
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+/* Remove any transform overrides that might interfere */
+.flash-card.active:not(.flipped) {
+    transform: translate3d(0, 50px, 100px) rotate(0deg) scale(1) !important;
+}
+
+/* Ensure inactive cards don't interfere with the active card */
+.flash-card:not(.active) {
+    pointer-events: none;
 }
 
 .editable-content {
@@ -211,16 +201,4 @@ h1 {
 
 .back-home:hover {
     background: rgba(255, 255, 255, 0.3);
-}
-
-/* Override the regular transform for flipped state */
-.flash-card.flipped .card-front,
-.flash-card.flipped .card-back {
-    width: 100%;
-    height: 100%;
-}
-
-/* Ensure transforms don't conflict */
-.flash-card.active:not(.flipped) {
-    transform: none !important;
 }
