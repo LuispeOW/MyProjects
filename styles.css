@@ -122,16 +122,19 @@ h1 {
     transform-style: preserve-3d;
 }
 
-.card-front {
+.card-front, .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     display: flex;
-    align-items: center; /* Keep text vertically centered */
+    align-items: center;
     justify-content: center;
     border-radius: 25px;
+}
+
+.card-front {
     font-size: 6rem;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -139,9 +142,44 @@ h1 {
 
 .card-back {
     transform: rotateY(180deg);
-    background: inherit; /* This ensures the gradient carries over */
-    padding: 20px;
-    overflow-y: auto;
+    background: inherit;
+}
+
+.flash-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.flash-card.flipped {
+    position: fixed !important;
+    top: 45% !important;
+    left: 50% !important;
+    width: 95vw !important;
+    height: 85vh !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 9999 !important;
+}
+
+.back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.back-content h2 {
+    font-size: 4rem;
+    margin-top: 2vh; /* Push title down slightly from top */
+}
+
+.back-content p {
+    font-size: 2rem;
+    line-height: 1.6;
+    margin: auto 0; /* Center content vertically */
+    padding: 2vh 0;
 }
 
 .editable-content {
@@ -177,27 +215,4 @@ h1 {
 
 .back-home:hover {
     background: rgba(255, 255, 255, 0.3);
-}
-
-.back-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between; /* Distribute space */
-    padding: 5vh 5vw 8vh 5vw; /* More padding at bottom */
-    box-sizing: border-box;
-}
-
-.back-content h2 {
-    font-size: 4rem;
-    margin-top: 2vh; /* Push title down slightly from top */
-}
-
-.back-content p {
-    font-size: 2rem;
-    line-height: 1.6;
-    margin: auto 0; /* Center content vertically */
-    padding: 2vh 0;
 }
