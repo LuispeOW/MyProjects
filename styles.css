@@ -35,108 +35,54 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 2000px;
-    z-index: 1;
 }
 
-.flash-card {
+.carousel .flash-card {
     position: absolute;
     width: 700px !important;
     height: 400px !important;
     cursor: pointer;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    transform-style: preserve-3d;
-    font-size: 5rem; /* Increased base font size */
+    font-size: 64px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    will-change: transform, opacity, filter, box-shadow;
+    perspective: 1000px;
 }
 
-/* Ensure active card is always on top */
+/* Add specific z-index for active card */
 .flash-card.active {
-    z-index: 1000 !important;
-    transform: translateZ(100px) !important; /* Push active card forward in 3D space */
+    z-index: 1000 !important; /* Force highest z-index */
 }
 
-/* Keep inactive cards behind */
+/* Ensure inactive cards stay below */
 .flash-card:not(.active) {
     z-index: 1;
 }
 
-.flash-card.flipped {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: 95vw !important;
-    height: 85vh !important;
-    transform: translate(-50%, -50%) !important;
-    z-index: 9999 !important; /* Ensure flipped card is above everything */
-}
-
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
-}
-
-.flash-card.flipped .card-inner {
-    transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 25px;
-    font-size: 6rem; /* Increased font size */
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-weight: bold; /* Make text bolder */
-}
-
-.card-back {
-    transform: rotateY(180deg);
-    background: inherit;
-    padding: 40px;
-    overflow-y: auto;
-}
-
-/* Individual card styles with proper border radius */
-.carousel .flash-card.card-projects,
-.carousel .flash-card.card-projects .card-front,
-.carousel .flash-card.card-projects .card-back {
+/* Individual card styles */
+.carousel .flash-card.card-projects {
     background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
-    border-radius: 25px;
 }
 
-.carousel .flash-card.card-blog,
-.carousel .flash-card.card-blog .card-front,
-.carousel .flash-card.card-blog .card-back {
+.carousel .flash-card.card-blog {
     background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
-    border-radius: 25px;
 }
 
-.carousel .flash-card.card-about,
-.carousel .flash-card.card-about .card-front,
-.carousel .flash-card.card-about .card-back {
+.carousel .flash-card.card-about {
     background: linear-gradient(135deg, #29b6f6 0%, #0288d1 100%);
-    border-radius: 25px;
 }
 
-.carousel .flash-card.card-contact,
-.carousel .flash-card.card-contact .card-front,
-.carousel .flash-card.card-contact .card-back {
+.carousel .flash-card.card-contact {
     background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
-    border-radius: 25px;
 }
 
 .carousel .flash-card:hover {
@@ -167,6 +113,42 @@ h1 {
     background: linear-gradient(135deg, #9C27B0 0%, #8e24aa 100%);
 }
 
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flash-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+}
+
+.card-front {
+    font-size: 64px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    padding: 20px;
+    overflow-y: auto;
+}
+
 .editable-content {
     width: 90%;
     height: 90%;
@@ -181,13 +163,37 @@ h1 {
     letter-spacing: normal;
 }
 
-/* Adjust text size for back content */
+.back-home {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.back-home:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.back-content {
+    padding: 20px;
+    height: 100%;
+    position: relative;
+}
+
 .back-content h2 {
-    font-size: 4rem;
-    margin-bottom: 2rem;
+    font-size: 32px;
+    margin-bottom: 20px;
 }
 
 .back-content p {
-    font-size: 2rem;
+    font-size: 18px;
     line-height: 1.6;
 }

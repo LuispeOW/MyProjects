@@ -14,20 +14,22 @@ const positions = {
 };
 
 function updateCardsPosition() {
+    // First pass: reset all cards to base layer
+    cards.forEach(card => {
+        card.style.zIndex = "1";
+    });
+
     cards.forEach((card, index) => {
-        // Skip positioning update if card is flipped
-        if (card.classList.contains('flipped')) {
-            return;
-        }
-        
         let position;
         const offset = (index - activeIndex + totalCards) % totalCards;
         
         switch(offset) {
-            case 0: // Active card
+            case 0: // Active card (center)
                 position = positions.center;
                 card.style.opacity = 1;
+                // Force highest z-index through both style and transform
                 card.style.zIndex = "1000";
+                position.z = 100; // Add Z translation
                 break;
             case 1: // Next card (right)
                 position = positions.right;
@@ -51,16 +53,12 @@ function updateCardsPosition() {
                 break;
         }
 
-        // Only apply transform if card is not flipped
-        if (!card.classList.contains('flipped')) {
-            requestAnimationFrame(() => {
-                card.style.transform = `
-                    translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
-                    rotate(${position.rotate}deg)
-                    scale(${position.scale})
-                `;
-            });
-        }
+        // Add Z translation to transform
+        card.style.transform = `
+            translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
+            rotate(${position.rotate}deg)
+            scale(${position.scale})
+        `;
         
         if (offset === 0) {
             card.style.cursor = 'pointer';
@@ -98,30 +96,15 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Update click handler
+// Modify the click handler for cards
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Add transition class before flipping
-            card.classList.add('transitioning');
-            
-            // Remove flipped class from all other cards
-            cards.forEach(c => {
-                if (c !== card) c.classList.remove('flipped');
-            });
-            
-            // Toggle the clicked card
-            requestAnimationFrame(() => {
-                card.classList.toggle('flipped');
-            });
-            
-            // Remove transition class after animation
-            setTimeout(() => {
-                card.classList.remove('transitioning');
-            }, 800);
+            // Flip the active card
+            card.classList.toggle('flipped');
         } else {
-            // Existing rotation logic
+            // Rotate carousel
             if (diff <= totalCards / 2) {
                 activeIndex = (activeIndex + 1) % totalCards;
             } else {
@@ -132,14 +115,13 @@ cards.forEach((card, index) => {
     });
 });
 
-// Add back button handler
+// Add back home button functionality
 document.querySelectorAll('.back-home').forEach(button => {
     button.addEventListener('click', (e) => {
-        e.stopPropagation();
+        e.stopPropagation(); // Prevent card click event
         const card = button.closest('.flash-card');
         if (card) {
             card.classList.remove('flipped');
-            updateCardsPosition();
         }
     });
 });
@@ -176,29 +158,7 @@ cards.forEach(card => {
             card.style.boxShadow = '0 20px 50px rgba(0,0,0,0.3)';
         }
     });
-
-    // Separate click handler
-    card.addEventListener('click', () => {
-        const diff = (index - activeIndex + totalCards) % totalCards;
-        if (diff === 0) {
-            // Only navigate if it's the active card
-            const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
-            if (cardClass && cardUrls[cardClass]) {
-                window.location.href = cardUrls[cardClass];
-            }
-        } else {
-            // Rotate carousel
-            if (diff <= totalCards / 2) {
-                activeIndex = (activeIndex + 1) % totalCards;
-            } else {
-                activeIndex = (activeIndex - 1 + totalCards) % totalCards;
-            }
-            updateCardsPosition();
-        }
-    });
 });
-
-// Rest of your JavaScript remains the same
 
 // Handle window resize
 window.addEventListener('resize', updateCardsPosition);
