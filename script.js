@@ -23,11 +23,6 @@ function updateCardsPosition() {
         let position;
         const offset = (index - activeIndex + totalCards) % totalCards;
         
-        // Don't update position if card is flipped
-        if (card.classList.contains('flipped')) {
-            return;
-        }
-
         switch(offset) {
             case 0: // Active card (center)
                 position = positions.center;
@@ -58,14 +53,12 @@ function updateCardsPosition() {
                 break;
         }
 
-        // Modify the transform application
-        if (!card.classList.contains('flipped')) {
-            card.style.transform = `
-                translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
-                rotate(${position.rotate}deg)
-                scale(${position.scale})
-            `;
-        }
+        // Add Z translation to transform
+        card.style.transform = `
+            translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
+            rotate(${position.rotate}deg)
+            scale(${position.scale})
+        `;
         
         if (offset === 0) {
             card.style.cursor = 'pointer';
@@ -103,25 +96,13 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Modify the click handler
+// Add click handlers for cards
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         const diff = (index - activeIndex + totalCards) % totalCards;
         if (diff === 0) {
-            // Remove all other flipped cards first
-            cards.forEach(c => {
-                if (c !== card) {
-                    c.classList.remove('flipped');
-                }
-            });
-            // Toggle the clicked card
+            // Flip the active card instead of navigation
             card.classList.toggle('flipped');
-            // Reset transforms when flipping
-            if (card.classList.contains('flipped')) {
-                card.style.transform = 'translate(-50%, -50%)';
-            } else {
-                updateCardsPosition();
-            }
         } else {
             // Rotate carousel
             if (diff <= totalCards / 2) {
@@ -130,17 +111,6 @@ cards.forEach((card, index) => {
                 activeIndex = (activeIndex - 1 + totalCards) % totalCards;
             }
             updateCardsPosition();
-        }
-    });
-});
-
-// Add back home button functionality
-document.querySelectorAll('.back-home').forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent card click event
-        const card = button.closest('.flash-card');
-        if (card) {
-            card.classList.remove('flipped');
         }
     });
 });
@@ -177,7 +147,29 @@ cards.forEach(card => {
             card.style.boxShadow = '0 20px 50px rgba(0,0,0,0.3)';
         }
     });
+
+    // Separate click handler
+    card.addEventListener('click', () => {
+        const diff = (index - activeIndex + totalCards) % totalCards;
+        if (diff === 0) {
+            // Only navigate if it's the active card
+            const cardClass = Array.from(card.classList).find(cls => cls.startsWith('card-'));
+            if (cardClass && cardUrls[cardClass]) {
+                window.location.href = cardUrls[cardClass];
+            }
+        } else {
+            // Rotate carousel
+            if (diff <= totalCards / 2) {
+                activeIndex = (activeIndex + 1) % totalCards;
+            } else {
+                activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+            }
+            updateCardsPosition();
+        }
+    });
 });
+
+// Rest of your JavaScript remains the same
 
 // Handle window resize
 window.addEventListener('resize', updateCardsPosition);
