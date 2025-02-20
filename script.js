@@ -22,6 +22,11 @@ const positions = {
 };
 
 function updateCardsPosition() {
+    // First pass: reset all cards to base layer
+    cards.forEach(card => {
+        card.style.zIndex = "1";
+    });
+
     cards.forEach((card, index) => {
         let position;
         const offset = (index - activeIndex + totalCards) % totalCards;
@@ -30,32 +35,35 @@ function updateCardsPosition() {
             case 0: // Active card (center)
                 position = positions.center;
                 card.style.opacity = 1;
-                card.style.zIndex = 10;  // Increased z-index for center card
+                // Force highest z-index through both style and transform
+                card.style.zIndex = "1000";
+                position.z = 100; // Add Z translation
                 break;
             case 1: // Next card (right)
                 position = positions.right;
                 card.style.opacity = 0.8;
-                card.style.zIndex = 5;   // Lower z-index for side cards
+                position.z = 0;
                 break;
             case totalCards - 1: // Previous card (left)
                 position = positions.left;
                 card.style.opacity = 0.8;
-                card.style.zIndex = 5;   // Lower z-index for side cards
+                position.z = 0;
                 break;
             case 2: // Far next card
                 position = positions.farRight;
                 card.style.opacity = 0.6;
-                card.style.zIndex = 1;   // Lowest z-index for hidden cards
+                position.z = -100;
                 break;
             default: // Far previous card
                 position = positions.farLeft;
                 card.style.opacity = 0.6;
-                card.style.zIndex = 1;   // Lowest z-index for hidden cards
+                position.z = -100;
                 break;
         }
 
+        // Add Z translation to transform
         card.style.transform = `
-            translate(${position.x}px, ${position.y}px)
+            translate3d(${position.x}px, ${position.y}px, ${position.z || 0}px)
             rotate(${position.rotate}deg)
             scale(${position.scale})
         `;

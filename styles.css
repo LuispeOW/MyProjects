@@ -59,6 +59,16 @@ h1 {
     will-change: transform, opacity;
 }
 
+/* Add specific z-index for active card */
+.flash-card.active {
+    z-index: 1000 !important; /* Force highest z-index */
+}
+
+/* Ensure inactive cards stay below */
+.flash-card:not(.active) {
+    z-index: 1;
+}
+
 /* Individual card styles */
 .carousel .flash-card.card-projects {
     background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
