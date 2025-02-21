@@ -13,7 +13,28 @@ const positions = {
     farRight: { x: 600, y: 800, rotate: 15, scale: 0.7 }     // Maintains below-screen position
 };
 
+// Add these variables at the top with other constants
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Add this function after the existing position definitions
+function getPositionsForScreenSize() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        return {
+            center: { x: 0, y: 90, rotate: 0, scale: 1 },          // Moved down by adding y: 150
+            left: { x: -window.innerWidth, y: 250, rotate: -15, scale: 0.85 },
+            right: { x: window.innerWidth, y: 250, rotate: 15, scale: 0.85 },
+            farLeft: { x: -window.innerWidth * 1.5, y: 350, rotate: -15, scale: 0.7 },
+            farRight: { x: window.innerWidth * 1.5, y: 350, rotate: 15, scale: 0.7 }
+        };
+    }
+    return positions; // Return original positions for desktop
+}
+
 function updateCardsPosition() {
+    const currentPositions = getPositionsForScreenSize();
     // First pass: reset all cards to base layer
     cards.forEach(card => {
         card.style.zIndex = "1";
@@ -25,29 +46,29 @@ function updateCardsPosition() {
         
         switch(offset) {
             case 0: // Active card (center)
-                position = positions.center;
+                position = currentPositions.center;
                 card.style.opacity = 1;
                 // Force highest z-index through both style and transform
                 card.style.zIndex = "1000";
                 position.z = 100; // Add Z translation
                 break;
             case 1: // Next card (right)
-                position = positions.right;
+                position = currentPositions.right;
                 card.style.opacity = 0.8;
                 position.z = 0;
                 break;
             case totalCards - 1: // Previous card (left)
-                position = positions.left;
+                position = currentPositions.left;
                 card.style.opacity = 0.8;
                 position.z = 0;
                 break;
             case 2: // Far next card
-                position = positions.farRight;
+                position = currentPositions.farRight;
                 card.style.opacity = 0.6;
                 position.z = -100;
                 break;
             default: // Far previous card
-                position = positions.farLeft;
+                position = currentPositions.farLeft;
                 card.style.opacity = 0.6;
                 position.z = -100;
                 break;
@@ -162,6 +183,31 @@ cards.forEach(card => {
 
 // Handle window resize
 window.addEventListener('resize', updateCardsPosition);
+
+// Add these touch event listeners after the keyboard event listeners
+carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+});
+
+carousel.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // Prevent scrolling while touching carousel
+});
+
+carousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    const swipeDistance = touchEndX - touchStartX;
+    
+    if (Math.abs(swipeDistance) > 50) { // Minimum swipe distance
+        if (swipeDistance > 0) {
+            // Swipe right - go to previous card
+            activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+        } else {
+            // Swipe left - go to next card
+            activeIndex = (activeIndex + 1) % totalCards;
+        }
+        updateCardsPosition();
+    }
+});
 
 // Initial setup
 updateCardsPosition();

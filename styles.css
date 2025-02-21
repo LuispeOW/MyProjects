@@ -235,3 +235,35 @@ header, main, footer {
 .flash-card.card-contact .card-back {
     background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
 }
+
+/* Add these media queries at the end of the file */
+@media screen and (max-width: 768px) {
+    .flash-card {
+        width: 90vw !important;
+        height: 60vh !important;
+    }
+
+    .flash-card.flipped {
+        width: 95vw !important;
+        height: 75vh !important;
+        transform: translate(-50%, -40%) rotateY(180deg) !important;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .card-front {
+        font-size: 3rem;
+    }
+
+    .card-back h2 {
+        font-size: 2.5rem;
+    }
+
+    .card-back p {
+        font-size: 1.5rem;
+    }
+}
