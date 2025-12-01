@@ -68,8 +68,8 @@ h1 {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    width: 80vw !important;
-    height: 75vh !important;
+    width: 70vw !important;
+    height: 65vh !important;
     -webkit-transform: translate(-50%, -50%) rotateY(180deg) !important;
     -moz-transform: translate(-50%, -50%) rotateY(180deg) !important;
     -ms-transform: translate(-50%, -50%) rotateY(180deg) !important;
@@ -79,8 +79,8 @@ h1 {
 
     /* Add these for better browser compatibility */
     margin: 0 !important;
-    max-width: 80vw;
-    max-height: 75vh;
+    max-width: 70vw;
+    max-height: 65vh;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -90,9 +90,9 @@ h1 {
     overflow: visible !important;
 
     /* Add visible border and shadow to see card edges clearly */
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.3),
-                0 25px 60px rgba(0, 0, 0, 0.5);
+    border: 5px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.5),
+                0 30px 80px rgba(0, 0, 0, 0.7);
 }
 
 .flash-card.flipped .card-inner {
@@ -324,19 +324,19 @@ header, main, footer {
     }
 
     .flash-card.flipped {
-        width: 80vw !important;
-        height: 70vh !important;
+        width: 70vw !important;
+        height: 60vh !important;
         -webkit-transform: translate(-50%, -50%) rotateY(180deg) !important;
         -moz-transform: translate(-50%, -50%) rotateY(180deg) !important;
         -ms-transform: translate(-50%, -50%) rotateY(180deg) !important;
         -o-transform: translate(-50%, -50%) rotateY(180deg) !important;
         transform: translate(-50%, -50%) rotateY(180deg) !important;
-        max-width: 80vw;
-        max-height: 70vh;
+        max-width: 70vw;
+        max-height: 60vh;
         overflow: visible !important;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.3),
-                    0 20px 50px rgba(0, 0, 0, 0.5);
+        border: 4px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 0 12px rgba(0, 0, 0, 0.5),
+                    0 25px 60px rgba(0, 0, 0, 0.7);
     }
 
     h1 {
