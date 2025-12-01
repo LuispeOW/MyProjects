@@ -55,14 +55,12 @@ h1 {
     justify-content: center;
     text-align: center;
     padding: 40px;
-    transform-style: preserve-3d;
 }
 
 .card-front {
     font-size: 6rem;
     text-transform: uppercase;
     letter-spacing: 4px;
-    transform: rotateY(0deg);
 }
 
 .card-back {

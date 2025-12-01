@@ -41,7 +41,6 @@ function updateCards() {
         card.style.transform = `
             translate(-50%, -50%)
             translate3d(${position.x}px, ${position.y}px, ${position.z}px)
-            rotateY(0deg)
             rotateZ(${position.rotate}deg)
             scale(${position.scale})
         `;
