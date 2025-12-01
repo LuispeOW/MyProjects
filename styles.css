@@ -86,6 +86,9 @@ h1 {
     justify-content: center;
     align-items: center;
 
+    /* CRITICAL: Override the overflow: hidden to show spacing */
+    overflow: visible !important;
+
     /* Add visible border and shadow to see card edges clearly */
     border: 3px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.3),
@@ -107,6 +110,7 @@ h1 {
     align-items: center;
     width: 100%;
     height: 100%;
+    overflow: visible !important;
 }
 
 .flash-card.active {
@@ -270,6 +274,12 @@ h1 {
     overflow: hidden;
 }
 
+/* But allow overflow for flipped cards to show spacing */
+.flash-card.flipped .card-front,
+.flash-card.flipped .card-back {
+    overflow: visible !important;
+}
+
 /* Ensure other page elements stay behind */
 body > * {
     z-index: 1;
@@ -323,6 +333,7 @@ header, main, footer {
         transform: translate(-50%, -50%) rotateY(180deg) !important;
         max-width: 80vw;
         max-height: 70vh;
+        overflow: visible !important;
         border: 2px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.3),
                     0 20px 50px rgba(0, 0, 0, 0.5);
