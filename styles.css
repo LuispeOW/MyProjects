@@ -59,15 +59,15 @@ h1 {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    width: 98vw !important;
-    height: 95vh !important;
+    width: 90vw !important;
+    height: 85vh !important;
     transform: translate(-50%, -50%) rotateY(180deg) !important;
     z-index: 999999 !important;
-    
+
     /* Add these for better browser compatibility */
     margin: 0 !important;
-    max-width: 98vw;
-    max-height: 95vh;
+    max-width: 90vw;
+    max-height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -266,8 +266,8 @@ header, main, footer {
     }
 
     .flash-card.flipped {
-        width: 95vw !important;
-        height: 75vh !important;
+        width: 90vw !important;
+        height: 80vh !important;
         transform: translate(-50%, -50%) rotateY(180deg) !important;
     }
 
