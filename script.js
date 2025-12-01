@@ -37,15 +37,19 @@ function updateCards() {
             card.classList.remove('active', 'flipped');
         }
 
-        // Apply transforms
-        card.style.transform = `
-            translate(-50%, -50%)
-            translate3d(${position.x}px, ${position.y}px, ${position.z}px)
-            rotateZ(${position.rotate}deg)
-            scale(${position.scale})
-        `;
-        card.style.opacity = position.opacity;
-        card.style.zIndex = offset === 0 ? 100 : 1;
+        // Apply transforms - skip if card is flipped (CSS handles it)
+        const isFlipped = card.classList.contains('flipped');
+
+        if (!isFlipped) {
+            card.style.transform = `
+                translate(-50%, -50%)
+                translate3d(${position.x}px, ${position.y}px, ${position.z}px)
+                rotateZ(${position.rotate}deg)
+                scale(${position.scale})
+            `;
+            card.style.opacity = position.opacity;
+            card.style.zIndex = offset === 0 ? 100 : 1;
+        }
     });
 }
 
