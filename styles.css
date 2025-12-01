@@ -1,3 +1,6 @@
+/* ========================================
+   BASE STYLES
+   ======================================== */
 html, body {
     margin: 0;
     padding: 0;
@@ -14,7 +17,7 @@ h1 {
     text-align: center;
     font-size: 5rem;
     margin-top: 30px;
-    margin-bottom: 30px; /* Reduced margin bottom */
+    margin-bottom: 30px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     letter-spacing: 4px;
@@ -22,9 +25,12 @@ h1 {
     position: relative;
 }
 
+/* ========================================
+   CAROUSEL CONTAINER & LAYOUT
+   ======================================== */
 .carousel-container {
     position: relative;
-    z-index: 9999;
+    z-index: 100;
 }
 
 .carousel {
@@ -38,13 +44,18 @@ h1 {
     transform: translateY(200px);
 }
 
+/* ========================================
+   CARD BASE STYLES
+   ======================================== */
 .flash-card {
     position: absolute;
-    width: 700px !important;
-    height: 400px !important;
+    width: 700px;
+    height: 400px;
     cursor: pointer;
     transform-style: preserve-3d;
-    transition: transform 1s ease;
+    transition: transform 1s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    border-radius: 25px;
+    overflow: visible;
 }
 
 .card-inner {
@@ -55,70 +66,154 @@ h1 {
     transform-style: preserve-3d;
 }
 
-.flash-card.flipped {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: 98vw !important;
-    height: 95vh !important;
-    transform: translate(-50%, -50%) rotateY(180deg) !important;
-    z-index: 999999 !important;
-    
-    /* Add these for better browser compatibility */
-    margin: 0 !important;
-    max-width: 98vw;
-    max-height: 95vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.flash-card.flipped .card-inner {
-    transform: rotateY(180deg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
+/* ========================================
+   CARD STATES (Active, Flipped)
+   ======================================== */
 .flash-card.active {
-    z-index: 10001 !important;
+    z-index: 1000;
 }
 
 .flash-card:not(.active) {
     z-index: 1;
 }
 
-/* Individual card styles */
-.carousel .flash-card.card-projects {
+/* Flipped card - centered fullscreen with cross-browser compatibility */
+.flash-card.flipped {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 98vw;
+    height: 95vh;
+    margin: auto;
+    z-index: 10000;
+}
+
+.flash-card.flipped .card-inner {
+    transform: rotateY(180deg);
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================================
+   CARD FACES (Front & Back)
+   ======================================== */
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.card-front {
+    font-size: 6rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background: inherit;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   BACK CONTENT (Scrollable)
+   ======================================== */
+.back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transform: rotateY(180deg);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Custom scrollbar for webkit browsers */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.back-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.back-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.back-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.back-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.card-back h2 {
+    font-size: 2.5rem;
+    color: white;
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.card-back p {
+    font-size: 1.5rem;
+    color: white;
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+}
+
+/* ========================================
+   CARD COLOR THEMES
+   ======================================== */
+.card-projects,
+.card-projects .card-front,
+.card-projects .card-back {
     background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
 }
 
-.carousel .flash-card.card-blog {
+.card-blog,
+.card-blog .card-front,
+.card-blog .card-back {
     background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
 }
 
-.carousel .flash-card.card-about {
+.card-about,
+.card-about .card-front,
+.card-about .card-back {
     background: linear-gradient(135deg, #29b6f6 0%, #0288d1 100%);
 }
 
-.carousel .flash-card.card-contact {
+.card-contact,
+.card-contact .card-front,
+.card-contact .card-back {
     background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
 }
 
-.carousel .flash-card:hover {
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-}
-
-/* Add hover effects */
+/* ========================================
+   HOVER EFFECTS
+   ======================================== */
 .flash-card:hover {
-    box-shadow: 0 25px 60px rgba(0,0,0,0.4); /* Enhanced shadow */
-    filter: brightness(1.1); /* Subtle brightness increase */
-    transition: all 0.3s ease-out; /* Faster transition for hover */
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    filter: brightness(1.1);
 }
 
-/* Specific gradient overlays on hover */
 .card-projects:hover {
     background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
 }
@@ -135,146 +230,24 @@ h1 {
     background: linear-gradient(135deg, #9C27B0 0%, #8e24aa 100%);
 }
 
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 25px;
-}
-
-.card-front {
-    font-size: 6rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-}
-
-.card-back {
-    transform: rotateY(180deg);
-    background: inherit;
-}
-
-.back-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    box-sizing: border-box;
-    transform: rotateY(180deg);
-}
-
-.flash-card.flipped .back-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.card-back h2 {
-    font-size: 4rem;
-    color: white;
-    margin-bottom: 2rem;
-}
-
-.card-back p {
-    font-size: 2rem;
-    color: white;
-    line-height: 1.6;
-}
-
-.back-home {
-    margin-top: 2rem;
-    padding: 1rem 2rem;
-    font-size: 1.5rem;
-    color: white;
-    background: transparent;
-    border: 2px solid white;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.editable-content {
-    width: 90%;
-    height: 90%;
-    padding: 20px;
-    font-size: 16px;
-    text-align: left;
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    outline: none;
-    text-transform: none;
-    letter-spacing: normal;
-}
-
-/* Ensure rounded corners are visible */
-.card-front, .card-back, .flash-card {
-    border-radius: 25px;
-    overflow: hidden;
-}
-
-/* Ensure other page elements stay behind */
-body > * {
-    z-index: 1;
-}
-
-/* Force other elements to stay behind */
-header, main, footer {
-    z-index: 1;
-    position: relative;
-}
-
-/* Ensure gradients are applied properly */
-.flash-card.card-projects,
-.flash-card.card-projects .card-front,
-.flash-card.card-projects .card-back {
-    background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
-}
-
-.flash-card.card-blog,
-.flash-card.card-blog .card-front,
-.flash-card.card-blog .card-back {
-    background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
-}
-
-.flash-card.card-about,
-.flash-card.card-about .card-front,
-.flash-card.card-about .card-back {
-    background: linear-gradient(135deg, #29b6f6 0%, #0288d1 100%);
-}
-
-.flash-card.card-contact,
-.flash-card.card-contact .card-front,
-.flash-card.card-contact .card-back {
-    background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
-}
-
-/* Media queries for mobile */
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
 @media screen and (max-width: 768px) {
-    .flash-card {
-        width: 90vw !important;
-        height: 60vh !important;
-    }
-
-    .flash-card.flipped {
-        width: 95vw !important;
-        height: 75vh !important;
-        transform: translate(-50%, -50%) rotateY(180deg) !important;
-    }
-
     h1 {
         font-size: 3rem;
         margin-top: 20px;
         margin-bottom: 20px;
+    }
+
+    .flash-card {
+        width: 90vw;
+        height: 60vh;
+    }
+
+    .flash-card.flipped {
+        width: 95vw;
+        height: 90vh;
     }
 
     .card-front {
@@ -282,10 +255,14 @@ header, main, footer {
     }
 
     .card-back h2 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
     }
 
     .card-back p {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    .back-content {
+        padding: 15px;
     }
 }
