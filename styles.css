@@ -68,8 +68,8 @@ h1 {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    width: 85vw !important;
-    height: 80vh !important;
+    width: 80vw !important;
+    height: 75vh !important;
     -webkit-transform: translate(-50%, -50%) rotateY(180deg) !important;
     -moz-transform: translate(-50%, -50%) rotateY(180deg) !important;
     -ms-transform: translate(-50%, -50%) rotateY(180deg) !important;
@@ -79,13 +79,17 @@ h1 {
 
     /* Add these for better browser compatibility */
     margin: 0 !important;
-    padding: 20px;
-    max-width: calc(100vw - 40px);
-    max-height: calc(100vh - 40px);
+    max-width: 80vw;
+    max-height: 75vh;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* Add visible border and shadow to see card edges clearly */
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.3),
+                0 25px 60px rgba(0, 0, 0, 0.5);
 }
 
 .flash-card.flipped .card-inner {
@@ -310,14 +314,18 @@ header, main, footer {
     }
 
     .flash-card.flipped {
-        width: 85vw !important;
-        height: 75vh !important;
+        width: 80vw !important;
+        height: 70vh !important;
         -webkit-transform: translate(-50%, -50%) rotateY(180deg) !important;
         -moz-transform: translate(-50%, -50%) rotateY(180deg) !important;
         -ms-transform: translate(-50%, -50%) rotateY(180deg) !important;
         -o-transform: translate(-50%, -50%) rotateY(180deg) !important;
         transform: translate(-50%, -50%) rotateY(180deg) !important;
-        padding: 15px;
+        max-width: 80vw;
+        max-height: 70vh;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.3),
+                    0 20px 50px rgba(0, 0, 0, 0.5);
     }
 
     h1 {
