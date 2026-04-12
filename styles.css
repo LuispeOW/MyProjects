@@ -119,15 +119,7 @@ h1 {
     overflow-y: auto;
 }
 
-/* ── Front face typography ── */
-.card-front span {
-    font-family: 'DM Serif Display', serif;
-    font-size: 5rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    color: rgba(255,255,255,0.95);
-    text-transform: uppercase;
-}
+/* ── Front face typography: see card-front span under Card front: images ── */
 
 /* ── Back face typography ── */
 .card-back h2 {
@@ -170,26 +162,59 @@ h1 {
     color: #fff;
 }
 
-/* ── Card colors ── */
-.card[data-card="projects"] .card-front,
+/* ── Card front: images ── */
+.card-front {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.card[data-card="projects"] .card-front {
+    background-image: url('img/card-projects.png');
+}
+.card[data-card="blog"] .card-front {
+    background-image: url('img/card-blog.png');
+}
+.card[data-card="about"] .card-front {
+    background-image: url('img/card-about.png');
+}
+.card[data-card="contact"] .card-front {
+    background-image: url('img/card-contact.png');
+}
+
+/* Label overlay at bottom of front face */
+.card-front span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 0 18px;
+    background: rgba(0,0,0,0.52);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    border-radius: 0 0 24px 24px;
+}
+
+/* ── Card back: colored ── */
 .card[data-card="projects"] .card-back {
     background: linear-gradient(145deg, #1a6b3c 0%, #0e4427 100%);
     border: 1px solid rgba(255,255,255,0.08);
 }
-
-.card[data-card="blog"] .card-front,
 .card[data-card="blog"] .card-back {
     background: linear-gradient(145deg, #c04a1a 0%, #7a2d0b 100%);
     border: 1px solid rgba(255,255,255,0.08);
 }
-
-.card[data-card="about"] .card-front,
 .card[data-card="about"] .card-back {
     background: linear-gradient(145deg, #1565a8 0%, #0a3d6e 100%);
     border: 1px solid rgba(255,255,255,0.08);
 }
-
-.card[data-card="contact"] .card-front,
 .card[data-card="contact"] .card-back {
     background: linear-gradient(145deg, #7b2d9c 0%, #4a1665 100%);
     border: 1px solid rgba(255,255,255,0.08);
