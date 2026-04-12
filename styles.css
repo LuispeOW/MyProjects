@@ -78,7 +78,7 @@ h1 {
 .card-inner {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: var(--card-h);
     transform-style: preserve-3d;
     transition: transform var(--transition-flip);
     border-radius: 24px;
