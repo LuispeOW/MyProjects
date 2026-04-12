@@ -7,8 +7,8 @@
 :root {
     --bg-from: #0d0d1a;
     --bg-to: #0f2744;
-    --card-w: 460px;
-    --card-h: 460px;
+    --card-w: 680px;
+    --card-h: 420px;
     --transition-move: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-flip: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -53,24 +53,20 @@ h1 {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -42%);
+    transform: translate(-50%, -45%);
     width: 100%;
     height: 100%;
     perspective: 2400px;
     pointer-events: none;
 }
 
-/* ── Card shell ──
-   The shell moves (carousel position) but never rotates for the flip.
-   The inner wrapper handles the flip rotation.
-   This is the key fix: separating translation from rotation.
-*/
+/* ── Card shell ── */
 .card {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: min(560px, 85vw);
-    height: min(560px, 85vw);
+    width: var(--card-w);
+    height: var(--card-h);
     transform-style: preserve-3d;
     transition: transform var(--transition-move), opacity var(--transition-move);
     cursor: pointer;
@@ -78,7 +74,7 @@ h1 {
     border-radius: 24px;
 }
 
-/* The inner wrapper is what actually flips */
+/* ── Inner wrapper handles flip rotation ── */
 .card-inner {
     position: relative;
     width: 100%;
@@ -119,7 +115,38 @@ h1 {
     overflow-y: auto;
 }
 
-/* ── Front face typography: see card-front span under Card front: images ── */
+/* ── Card front: images ── */
+.card-front {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.card[data-card="projects"] .card-front { background-image: url('img/card-projects.png'); }
+.card[data-card="blog"]     .card-front { background-image: url('img/card-blog.png'); }
+.card[data-card="about"]    .card-front { background-image: url('img/card-about.png'); }
+.card[data-card="contact"]  .card-front { background-image: url('img/card-contact.png'); }
+
+/* ── Label overlay ── */
+.card-front span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 0 18px;
+    background: rgba(0,0,0,0.52);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    border-radius: 0 0 24px 24px;
+}
 
 /* ── Back face typography ── */
 .card-back h2 {
@@ -158,53 +185,9 @@ h1 {
     text-underline-offset: 3px;
 }
 
-.card-back a:hover {
-    color: #fff;
-}
+.card-back a:hover { color: #fff; }
 
-/* ── Card front: images ── */
-.card-front {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-color: #000;
-    background-position: center;
-    position: relative;
-}
-
-.card[data-card="projects"] .card-front {
-    background-image: url('img/card-projects.png');
-}
-.card[data-card="blog"] .card-front {
-    background-image: url('img/card-blog.png');
-}
-.card[data-card="about"] .card-front {
-    background-image: url('img/card-about.png');
-}
-.card[data-card="contact"] .card-front {
-    background-image: url('img/card-contact.png');
-}
-
-/* Label overlay at bottom of front face */
-.card-front span {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 14px 0 18px;
-    background: rgba(0,0,0,0.52);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.2rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #fff;
-    text-align: center;
-    border-radius: 0 0 24px 24px;
-}
-
-/* ── Card back: colored ── */
+/* ── Card back colors ── */
 .card[data-card="projects"] .card-back {
     background: linear-gradient(145deg, #1a6b3c 0%, #0e4427 100%);
     border: 1px solid rgba(255,255,255,0.08);
@@ -289,9 +272,7 @@ h1 {
     transition: opacity 0.5s;
 }
 
-.hint.hidden {
-    opacity: 0;
-}
+.hint.hidden { opacity: 0; }
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
@@ -299,12 +280,12 @@ h1 {
     .subtitle { font-size: 0.75rem; }
 
     :root {
-        --card-w: 85vw;
-        --card-h: 85vw;
+        --card-w: 92vw;
+        --card-h: 56vw;
     }
 
-    .card-front span { font-size: 3.2rem; }
+    .card-front span { font-size: 2rem; }
     .card-back h2 { font-size: 1.5rem; }
     .card-back p { font-size: 0.9rem; }
-    .card-back { padding: 32px 32px; }
+    .card-back { padding: 28px; }
 }
