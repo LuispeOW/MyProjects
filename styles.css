@@ -164,7 +164,9 @@ h1 {
 
 /* ── Card front: images ── */
 .card-front {
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #000;
     background-position: center;
     position: relative;
 }
