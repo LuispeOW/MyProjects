@@ -1,0 +1,283 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-from: #0d0d1a;
+    --bg-to: #0f2744;
+    --card-w: 680px;
+    --card-h: 400px;
+    --transition-move: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-flip: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--bg-from) 0%, var(--bg-to) 100%);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Header ── */
+header {
+    text-align: center;
+    padding: 28px 0 0;
+    position: relative;
+    z-index: 10;
+}
+
+h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #fff;
+    line-height: 1;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 6px;
+}
+
+/* ── Carousel stage ── */
+.carousel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    width: 100%;
+    height: 100%;
+    perspective: 2400px;
+    pointer-events: none;
+}
+
+/* ── Card shell ──
+   The shell moves (carousel position) but never rotates for the flip.
+   The inner wrapper handles the flip rotation.
+   This is the key fix: separating translation from rotation.
+*/
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--card-w);
+    height: var(--card-h);
+    transform-style: preserve-3d;
+    transition: transform var(--transition-move), opacity var(--transition-move);
+    cursor: pointer;
+    pointer-events: auto;
+    border-radius: 24px;
+}
+
+/* The inner wrapper is what actually flips */
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform var(--transition-flip);
+    border-radius: 24px;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* ── Card faces ── */
+.card-front,
+.card-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 44px 48px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 44px 52px;
+    gap: 14px;
+    overflow-y: auto;
+}
+
+/* ── Front face typography ── */
+.card-front span {
+    font-family: 'DM Serif Display', serif;
+    font-size: 5rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.95);
+    text-transform: uppercase;
+}
+
+/* ── Back face typography ── */
+.card-back h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.95);
+    line-height: 1.2;
+}
+
+.card-back p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.75);
+    max-width: 520px;
+}
+
+.card-back ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.card-back li {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+}
+
+.card-back a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.card-back a:hover {
+    color: #fff;
+}
+
+/* ── Card colors ── */
+.card[data-card="projects"] .card-front,
+.card[data-card="projects"] .card-back {
+    background: linear-gradient(145deg, #1a6b3c 0%, #0e4427 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card[data-card="blog"] .card-front,
+.card[data-card="blog"] .card-back {
+    background: linear-gradient(145deg, #c04a1a 0%, #7a2d0b 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card[data-card="about"] .card-front,
+.card[data-card="about"] .card-back {
+    background: linear-gradient(145deg, #1565a8 0%, #0a3d6e 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card[data-card="contact"] .card-front,
+.card[data-card="contact"] .card-back {
+    background: linear-gradient(145deg, #7b2d9c 0%, #4a1665 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ── Controls ── */
+.controls {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 200;
+}
+
+.controls button {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls button:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+
+.dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transition: background 0.3s, transform 0.3s;
+}
+
+.dot.active {
+    background: rgba(255,255,255,0.9);
+    transform: scale(1.35);
+}
+
+/* ── Hint ── */
+.hint {
+    position: fixed;
+    bottom: 88px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.3);
+    pointer-events: none;
+    z-index: 200;
+    white-space: nowrap;
+    transition: opacity 0.5s;
+}
+
+.hint.hidden {
+    opacity: 0;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    h1 { font-size: 2.8rem; }
+    .subtitle { font-size: 0.75rem; }
+
+    :root {
+        --card-w: 90vw;
+        --card-h: 62vh;
+    }
+
+    .card-front span { font-size: 3.2rem; }
+    .card-back h2 { font-size: 1.5rem; }
+    .card-back p { font-size: 0.9rem; }
+    .card-back { padding: 32px 32px; }
+}
