@@ -121,7 +121,11 @@ h1 {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    width: 100%;
+    height: 100%;
 }
+
+
 
 .card[data-card="projects"] .card-front { background-image: url('img/card-projects.png'); }
 .card[data-card="blog"]     .card-front { background-image: url('img/card-blog.png'); }
